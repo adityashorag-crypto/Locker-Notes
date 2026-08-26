@@ -139,6 +139,7 @@ font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
 .section-head p{color:var(--ink-soft); margin:0;}
 #quick .section-head h2{color:var(--blue);}
 #help .section-head h2{color:var(--green);}
+#ask .section-head h2{color:var(--coral);}
 #advice .section-head h2{color:var(--purple);}
 
 /* ---------- Quick Answers ---------- */
@@ -206,6 +207,30 @@ content:"→"; position:absolute; left:0; font-family:var(--mono); font-weight:7
 }
 .tip-list strong{display:block; font-family:var(--mono); font-size:0.92rem; margin-bottom:2px;}
 
+/* ---------- Ask Anything ---------- */
+.ask-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px;
+border-top:4px solid var(--coral);
+}
+#questionInput{
+width:100%; font-family:var(--sans); font-size:1.05rem;
+padding:14px 16px; border-radius:10px; border:2px solid var(--paper-line);
+background:var(--paper); color:var(--ink); resize:vertical; min-height:100px;
+}
+#questionInput:focus{border-color:var(--coral); outline:none;}
+.ask-wrap .btn{margin-top:14px;}
+.ask-note{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 0;}
+.answer-box{
+margin-top:20px; padding:16px 18px; border-radius:10px;
+background:var(--paper); border-left:4px solid var(--coral);
+font-size:0.98rem; color:var(--ink); white-space:pre-wrap;
+display:none;
+}
+.answer-box.visible{display:block;}
+.answer-box.loading{color:var(--ink-soft); font-style:italic;}
+.answer-box.error{border-left-color:#B23A28; color:#B23A28;}
+
 /* ---------- Advice corkboard ---------- */
 .corkboard{
 background:#DCC9A3;
@@ -220,6 +245,14 @@ background:var(--highlighter); padding:18px 18px 20px; border-radius:2px;
 box-shadow:0 8px 14px rgba(0,0,0,0.16);
 font-size:0.92rem;
 transition:transform 0.15s ease, box-shadow 0.15s ease;
+position:relative;
+}
+.note::before{
+content:"";
+position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+width:14px; height:14px; border-radius:50%;
+background:radial-gradient(circle at 35% 35%, #fff, var(--coral) 55%, #7a2418 100%);
+box-shadow:0 2px 3px rgba(0,0,0,0.35);
 }
 .note:nth-child(1){transform:rotate(-2.5deg); background:var(--highlighter);}
 .note:nth-child(2){transform:rotate(1.5deg); background:#B7E4C7;}
@@ -230,4 +263,272 @@ transition:transform 0.15s ease, box-shadow 0.15s ease;
 .note:nth-child(2):hover{transform:rotate(1.5deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
 .note:nth-child(3):hover{transform:rotate(-1.2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
 .note:nth-child(4):hover{transform:rotate(2.4deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-
+.note:nth-child(5):hover{transform:rotate(-2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note p{margin:0;}
+.note strong{display:block; font-family:var(--mono); font-size:0.8rem; margin-bottom:6px; color:var(--ink-soft);}
+
+/* ---------- Footer ---------- */
+footer{
+background:var(--ink); color:#B9C6CF; padding:36px 24px 28px;
+margin-top:24px; text-align:center;
+}
+footer p{font-family:var(--mono); font-size:0.8rem; margin:0 0 6px;}
+footer a{color:var(--highlighter); text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:640px){
+.header-inner{flex-direction:column; align-items:flex-start;}
+nav{gap:14px; flex-wrap:wrap; font-size:0.8rem;}
+.hero{padding:44px 0 32px;}
+.corkboard{padding:24px 18px;}
+.panel-wrap{padding:22px 18px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="spiral"></div>
+<div class="thread"></div>
+<div class="header-inner">
+<div class="brand">
+<span class="brand-tab">Locker Notes</span>
+<span class="brand-sub">homework help &amp; advice</span>
+</div>
+<nav>
+<a href="#quick">Quick Answers</a>
+<a href="#help">Homework Help</a>
+<a href="#ask">Ask Anything</a>
+<a href="#advice">Advice</a>
+</nav>
+</div>
+</header>
+
+<main class="wrap">
+
+<section class="hero">
+<p class="eyebrow">Free · Instant · No sign-up</p>
+<h1>Stuck on homework? <span class="hl">Or just need advice?</span></h1>
+<p>Locker Notes is a free spot for students to get instant help — homework questions, study tips, or anything else you're not sure who to ask. Built by an 8th grader, for students like you.</p>
+<div class="cta-row">
+<a href="#ask" class="btn btn-solid">Ask a question</a>
+<a href="#help" class="btn btn-ghost">Browse homework help</a>
+</div>
+</section>
+
+<section id="quick">
+<div class="section-head">
+<h2>Quick Answers</h2>
+<p>Type a keyword and see if we've already got you covered.</p>
+</div>
+<div class="search-wrap">
+<input type="text" class="search-input" id="quickSearch" placeholder="Try 'fractions', 'photosynthesis', 'essay intro'...">
+<p class="search-hint">Matches update as you type.</p>
+<p class="search-trust">✓ 100% free, no account needed</p>
+<div class="qa-results" id="qaResults"></div>
+</div>
+</section>
+
+<section id="help">
+<div class="section-head">
+<h2>Homework Help</h2>
+<p>Pick a subject for quick strategies, or head to Ask Anything for something specific.</p>
+</div>
+<div class="tabbar" role="tablist">
+<button class="tab-btn" data-c="math" aria-selected="true">Math</button>
+<button class="tab-btn" data-c="sci" aria-selected="false">Science</button>
+<button class="tab-btn" data-c="eng" aria-selected="false">English</button>
+<button class="tab-btn" data-c="hist" aria-selected="false">History</button>
+</div>
+<div class="panel-wrap">
+<div class="panel active" data-p="math">
+<h3>Math</h3>
+<p class="sub">Quick strategies before you Google the answer.</p>
+<ul class="tip-list">
+<li><strong>Show every step.</strong> Even if you know the answer, writing out your steps catches mistakes and earns partial credit.</li>
+<li><strong>Check with estimation.</strong> Round the numbers first — if your exact answer is way off from your estimate, recheck your work.</li>
+<li><strong>Redo it from scratch once.</strong> If you got a problem wrong, don't just find the error — solve the whole thing again fresh.</li>
+</ul>
+</div>
+<div class="panel" data-p="sci">
+<h3>Science</h3>
+<p class="sub">Understand it, don't just memorize it.</p>
+<ul class="tip-list">
+<li><strong>Explain it out loud.</strong> If you can explain a concept simply to a friend, you actually understand it.</li>
+<li><strong>Draw the process.</strong> Diagrams for things like cycles or systems stick better than paragraphs.</li>
+<li><strong>Connect it to real life.</strong> Link the concept to something you've actually seen happen.</li>
+</ul>
+</div>
+<div class="panel" data-p="eng">
+<h3>English</h3>
+<p class="sub">Writing and reading, made less painful.</p>
+<ul class="tip-list">
+<li><strong>Outline before you write.</strong> Three bullet points for your main ideas saves you from staring at a blank page.</li>
+<li><strong>Read it out loud.</strong> Awkward sentences almost always sound wrong when spoken.</li>
+<li><strong>Cut ruthlessly.</strong> If a sentence doesn't add anything new, delete it.</li>
+</ul>
+</div>
+<div class="panel" data-p="hist">
+<h3>History</h3>
+<p class="sub">Dates and causes, actually remembered.</p>
+<ul class="tip-list">
+<li><strong>Build a timeline.</strong> Seeing events in order makes cause-and-effect click.</li>
+<li><strong>Ask "why," not just "what."</strong> Teachers usually care more about why something happened than the exact date.</li>
+<li><strong>Turn it into a story.</strong> People remember stories better than fact lists.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="ask">
+<div class="section-head">
+<h2>Ask Anything</h2>
+<p>Homework question or just need advice? Type it below and get an instant answer.</p>
+</div>
+<div class="ask-wrap">
+<textarea id="questionInput" rows="4" placeholder="What's your question?"></textarea>
+<button class="btn btn-solid" id="askBtn" onclick="askQuestion()">Get an answer</button>
+<p class="ask-note">Answers are generated instantly and might not always be perfect — always double check anything important.</p>
+<div class="answer-box" id="answerBox"></div>
+</div>
+</section>
+
+<section id="advice">
+<div class="section-head">
+<h2>Advice Corkboard</h2>
+<p>A few things worth pinning up.</p>
+</div>
+<div class="corkboard">
+<div class="note">
+<strong>On failing a test</strong>
+<p>One bad grade is data, not a verdict. Figure out what went wrong, fix that one thing, and move on.</p>
+</div>
+<div class="note">
+<strong>On feeling behind</strong>
+<p>Everyone's on a different timeline. Compare yourself to who you were last month, not to everyone else.</p>
+</div>
+<div class="note">
+<strong>On friend drama</strong>
+<p>Give it a day before reacting. Most things feel smaller after you've slept on them.</p>
+</div>
+<div class="note">
+<strong>On procrastinating</strong>
+<p>Don't aim to "finish the assignment." Aim to work on it for 10 minutes. Starting is the hard part.</p>
+</div>
+<div class="note">
+<strong>On asking for help</strong>
+<p>Asking a question isn't admitting you're behind — it's how you stop being behind.</p>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<p>Locker Notes — built by a student, for students.</p>
+<p>Questions or feedback? <a href="mailto:adityashorag@gmail.com">adityashorag@gmail.com</a></p>
+</footer>
+
+<script>
+// ---------- Homework Help tab switching ----------
+const tabButtons = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+tabButtons.forEach(b => b.setAttribute('aria-selected', 'false'));
+panels.forEach(p => p.classList.remove('active'));
+btn.setAttribute('aria-selected', 'true');
+document.querySelector('.panel[data-p="' + btn.dataset.c + '"]').classList.add('active');
+});
+});
+
+// ---------- Quick Answers search ----------
+const qaData = [
+{tag:"math", q:"How do I add fractions?", a:"Find a common denominator, convert each fraction to it, then add the numerators and keep that denominator.", keywords:["fraction","fractions","denominator","add"]},
+{tag:"math", q:"What is the order of operations?", a:"PEMDAS: Parentheses, Exponents, Multiplication/Division (left to right), then Addition/Subtraction (left to right).", keywords:["pemdas","order of operations","bodmas"]},
+{tag:"sci", q:"What is photosynthesis?", a:"Plants use sunlight, water, and carbon dioxide to make their own food (glucose), releasing oxygen as a byproduct.", keywords:["photosynthesis","plants","chlorophyll"]},
+{tag:"sci", q:"What's the difference between speed and velocity?", a:"Speed is how fast something is moving. Velocity is speed plus direction.", keywords:["speed","velocity","physics"]},
+{tag:"eng", q:"How do I start an essay introduction?", a:"Hook the reader with a question, fact, or short story, then state your main idea in one clear sentence.", keywords:["essay","introduction","intro","thesis"]},
+{tag:"eng", q:"What's the difference between a metaphor and a simile?", a:"A simile compares using 'like' or 'as.' A metaphor says one thing IS another, without 'like' or 'as.'", keywords:["metaphor","simile","figurative language"]},
+{tag:"hist", q:"How do I remember historical dates?", a:"Link each date to a story or image, and place events on a timeline instead of memorizing them in isolation.", keywords:["dates","history","memorize","timeline"]},
+{tag:"life", q:"How do I deal with exam stress?", a:"Break your revision into small chunks, take real breaks, and remember that one test doesn't decide everything.", keywords:["stress","exam","anxious","nervous","test anxiety"]},
+{tag:"life", q:"How do I make new friends at school?", a:"Start small — ask someone about something they're into, join a club, and give it time. Most friendships build slowly.", keywords:["friends","lonely","shy","social"]},
+];
+
+const searchInput = document.getElementById('quickSearch');
+const qaResults = document.getElementById('qaResults');
+
+function renderQaResults(query){
+qaResults.innerHTML = '';
+if(!query.trim()){
+qaResults.innerHTML = '<p class="qa-empty">Start typing above, or <a href="#ask">ask us directly</a> for anything not listed here.</p>';
+return;
+}
+const q = query.toLowerCase();
+const matches = qaData.filter(item =>
+item.q.toLowerCase().includes(q) ||
+item.keywords.some(k => k.includes(q) || q.includes(k))
+).slice(0, 6);
+
+if(matches.length === 0){
+qaResults.innerHTML = '<p class="qa-empty">No quick match yet — <a href="#ask">ask us directly</a> and get an instant answer instead.</p>';
+return;
+}
+matches.forEach(item => {
+const div = document.createElement('div');
+div.className = 'qa-item';
+div.setAttribute('data-tag', item.tag);
+div.innerHTML = '<p class="q">' + item.q + '</p><p class="a">' + item.a + '</p>';
+qaResults.appendChild(div);
+});
+}
+
+searchInput.addEventListener('input', (e) => renderQaResults(e.target.value));
+renderQaResults('');
+
+// ---------- Ask Anything ----------
+const WORKER_URL = "https://locker-notes-ai.aditya012345gupta.workers.dev";
+
+async function askQuestion(){
+const input = document.getElementById('questionInput');
+const answerBox = document.getElementById('answerBox');
+const askBtn = document.getElementById('askBtn');
+const question = input.value.trim();
+
+if(!question){
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = 'Type a question first!';
+return;
+}
+
+askBtn.disabled = true;
+answerBox.className = 'answer-box visible loading';
+answerBox.textContent = 'Thinking...';
+
+try{
+const res = await fetch(WORKER_URL, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ question })
+});
+const data = await res.json();
+
+if(data.answer){
+answerBox.className = 'answer-box visible';
+answerBox.textContent = data.answer;
+} else {
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = data.error || "Couldn't get an answer right now. Please try again.";
+}
+} catch(err){
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = 'Something went wrong. Check your connection and try again.';
+} finally {
+askBtn.disabled = false;
+}
+}
+</script>
+
+</body>
+</html>
