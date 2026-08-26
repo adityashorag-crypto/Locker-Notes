@@ -490,6 +490,16 @@ renderQaResults('');
 // ---------- Ask Anything ----------
 const WORKER_URL = "https://locker-notes-ai.aditya012345gupta.workers.dev";
 
+function cleanAnswerText(text){
+return text
+.replace(/^#{1,6}\s*/gm, '')
+.replace(/\*\*(.*?)\*\*/g, '$1')
+.replace(/\*(.*?)\*/g, '$1')
+.replace(/^[-*]\s+/gm, '• ')
+.replace(/`([^`]*)`/g, '$1')
+.trim();
+}
+
 async function askQuestion(){
 const input = document.getElementById('questionInput');
 const answerBox = document.getElementById('answerBox');
@@ -516,7 +526,7 @@ const data = await res.json();
 
 if(data.answer){
 answerBox.className = 'answer-box visible';
-answerBox.textContent = data.answer;
+answerBox.textContent = cleanAnswerText(data.answer);
 } else {
 answerBox.className = 'answer-box visible error';
 answerBox.textContent = data.error || "Couldn't get an answer right now. Please try again.";
