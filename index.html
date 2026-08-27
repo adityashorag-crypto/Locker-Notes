@@ -263,12 +263,20 @@ background:var(--paper); color:var(--ink); resize:vertical; min-height:100px;
 .answer-box{
 margin-top:20px; padding:16px 18px; border-radius:10px;
 background:var(--paper); border-left:4px solid var(--coral);
-font-size:0.98rem; color:var(--ink); white-space:pre-wrap;
+font-size:0.98rem; color:var(--ink);
 display:none;
 }
 .answer-box.visible{display:block;}
 .answer-box.loading{color:var(--ink-soft); font-style:italic;}
 .answer-box.error{border-left-color:#B23A28; color:#B23A28;}
+.answer-main{white-space:pre-wrap;}
+.flow-chart{display:flex; flex-direction:column; gap:6px; margin-top:16px; align-items:flex-start;}
+.flow-step{
+background:#fff; border-left:4px solid var(--coral); border-radius:0 8px 8px 0;
+padding:10px 14px; font-family:var(--mono); font-size:0.85rem; color:var(--ink);
+box-shadow:var(--shadow); max-width:100%;
+}
+.flow-arrow{font-family:var(--mono); font-weight:700; color:var(--coral); font-size:1rem; padding-left:14px;}
 
 /* ---------- Advice corkboard ---------- */
 .corkboard{
@@ -364,7 +372,7 @@ nav{gap:14px; flex-wrap:wrap; font-size:0.8rem;}
 <h1>Stuck on homework? <span class="hl">Or just need advice?</span></h1>
 <p>Locker Notes is a free spot for students to get instant help — homework questions, study tips, or anything else you're not sure who to ask. Built by an 8th grader, for students like you.</p>
 <div class="cta-row">
-<a href="#ask" class="btn btn-solid">Ask a question</a>
+<button class="btn btn-solid" onclick="goToAsk()">Ask a question</button>
 <a href="#help" class="btn btn-ghost">Browse homework help</a>
 </div>
 </section>
@@ -532,6 +540,14 @@ revealEls.forEach(el => io.observe(el));
 revealEls.forEach(el => el.classList.add('in-view'));
 }
 
+// ---------- Jump to Ask Anything + auto-focus ----------
+function goToAsk(){
+document.getElementById('ask').scrollIntoView({behavior:'smooth'});
+setTimeout(() => {
+document.getElementById('questionInput').focus();
+}, 450);
+}
+
 // ---------- Quick Answers search ----------
 const qaData = [
 {tag:"math", q:"How do I add fractions?", a:"Find a common denominator, convert each fraction to it, then add the numerators and keep that denominator.", keywords:["fraction","fractions","denominator","add"]},
@@ -598,6 +614,65 @@ return text
 .trim();
 }
 
+function parseAnswer(text){
+const stepsMatch = text.match(/STEPS:\s*([\s\S]+)$/i);
+let mainText = text;
+let steps = [];
+if(stepsMatch){
+mainText = text.slice(0, stepsMatch.index).trim();
+steps = stepsMatch[1].trim().split('||').map(s => s.trim()).filter(Boolean);
+}
+mainText = mainText.replace(/^ANSWER:\s*/i, '').trim();
+return { mainText, steps };
+}
+
+let loadingInterval;
+function startLoadingAnimation(el){
+const phrases = ['Thinking', 'Working on it', 'Almost there'];
+let phraseIndex = 0;
+let dotCount = 0;
+el.textContent = phrases[0];
+loadingInterval = setInterval(() => {
+dotCount = (dotCount + 1) % 4;
+if(dotCount === 0){
+phraseIndex = (phraseIndex + 1) % phrases.length;
+}
+el.textContent = phrases[phraseIndex] + '.'.repeat(dotCount);
+}, 500);
+}
+function stopLoadingAnimation(){
+if(loadingInterval) clearInterval(loadingInterval);
+}
+
+function renderAnswer(container, rawAnswer){
+const cleaned = cleanAnswerText(rawAnswer);
+const { mainText, steps } = parseAnswer(cleaned);
+container.innerHTML = '';
+
+const mainDiv = document.createElement('div');
+mainDiv.className = 'answer-main';
+mainDiv.textContent = mainText;
+container.appendChild(mainDiv);
+
+if(steps.length > 1){
+const flow = document.createElement('div');
+flow.className = 'flow-chart';
+steps.forEach((step, i) => {
+const box = document.createElement('div');
+box.className = 'flow-step';
+box.textContent = (i + 1) + '. ' + step;
+flow.appendChild(box);
+if(i < steps.length - 1){
+const arrow = document.createElement('div');
+arrow.className = 'flow-arrow';
+arrow.textContent = '↓';
+flow.appendChild(arrow);
+}
+});
+container.appendChild(flow);
+}
+}
+
 async function askQuestion(){
 const input = document.getElementById('questionInput');
 const answerBox = document.getElementById('answerBox');
@@ -612,7 +687,7 @@ return;
 
 askBtn.disabled = true;
 answerBox.className = 'answer-box visible loading';
-answerBox.textContent = 'Thinking...';
+startLoadingAnimation(answerBox);
 
 try{
 const res = await fetch(WORKER_URL, {
@@ -621,19 +696,22 @@ headers: { 'Content-Type': 'application/json' },
 body: JSON.stringify({ question })
 });
 const data = await res.json();
+stopLoadingAnimation();
 
 if(data.answer){
 answerBox.className = 'answer-box visible';
-answerBox.textContent = cleanAnswerText(data.answer);
+renderAnswer(answerBox, data.answer);
 } else {
 answerBox.className = 'answer-box visible error';
 answerBox.textContent = data.error || "Couldn't get an answer right now. Please try again.";
 }
 } catch(err){
+stopLoadingAnimation();
 answerBox.className = 'answer-box visible error';
 answerBox.textContent = 'Something went wrong. Check your connection and try again.';
 } finally {
 askBtn.disabled = false;
+stopLoadingAnimation();
 }
 }
 
