@@ -55,8 +55,14 @@ html{scroll-behavior:auto;}
 body{
 margin:0;
 background:
-linear-gradient(var(--paper-line) 1px, transparent 1px);
-background-size: 100% 32px;
+linear-gradient(var(--paper-line) 1px, transparent 1px),
+radial-gradient(circle at 8% 10%, rgba(62,142,222,0.14), transparent 32%),
+radial-gradient(circle at 92% 16%, rgba(139,111,206,0.15), transparent 32%),
+radial-gradient(circle at 12% 88%, rgba(76,175,125,0.13), transparent 32%),
+radial-gradient(circle at 88% 82%, rgba(232,84,62,0.12), transparent 32%),
+radial-gradient(circle at 50% 50%, rgba(206,154,37,0.08), transparent 45%);
+background-size: 100% 32px, cover, cover, cover, cover, cover;
+background-attachment: scroll, fixed, fixed, fixed, fixed, fixed;
 background-color:var(--paper);
 color:var(--ink);
 font-family:var(--sans);
@@ -64,7 +70,7 @@ line-height:1.5;
 -webkit-font-smoothing:antialiased;
 }
 a{color:var(--blue);}
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
 outline:3px solid var(--blue);
 outline-offset:2px;
 border-radius:4px;
@@ -107,7 +113,7 @@ transform:rotate(-2deg);
 box-shadow:var(--shadow);
 }
 .brand-sub{ font-family:var(--mono); font-size:0.75rem; color:#B9C6CF; letter-spacing:0.04em;}
-nav{display:flex; gap:22px; font-family:var(--mono); font-size:0.85rem;}
+nav{display:flex; gap:18px; font-family:var(--mono); font-size:0.82rem; flex-wrap:wrap;}
 nav a{color:var(--paper); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color 0.2s ease, color 0.2s ease;}
 nav a:hover{border-bottom-color:var(--highlighter);}
 
@@ -169,6 +175,7 @@ font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
 .section-head p{color:var(--ink-soft); margin:0;}
 #quick .section-head h2{color:var(--blue);}
 #help .section-head h2{color:var(--green);}
+#mocktest .section-head h2{color:var(--green);}
 #ask .section-head h2{color:var(--coral);}
 #advice .section-head h2{color:var(--purple);}
 #share .section-head h2{color:var(--mustard);}
@@ -245,6 +252,37 @@ content:"→"; position:absolute; left:0; font-family:var(--mono); font-weight:7
 .panel[data-p="eng"] .tip-list li::before{color:var(--coral);}
 .panel[data-p="hist"] .tip-list li::before{color:var(--mustard);}
 .tip-list strong{display:block; font-family:var(--mono); font-size:0.92rem; margin-bottom:2px;}
+
+/* ---------- Mock Tests ---------- */
+.mock-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px;
+border-top:4px solid var(--green);
+}
+.mock-controls{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+.mock-controls select{
+font-family:var(--sans); font-size:1rem; padding:10px 14px; border-radius:8px;
+border:2px solid var(--paper-line); background:var(--paper); color:var(--ink);
+}
+.mock-controls select:focus{border-color:var(--green); outline:none;}
+.mock-note{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 18px;}
+.mock-result{
+font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--green);
+margin-bottom:16px; display:none; padding:12px 16px; background:rgba(76,175,125,0.1); border-radius:8px;
+}
+.mock-result.visible{display:block;}
+.mock-question{
+background:var(--paper); border-radius:10px; padding:16px 18px; margin-bottom:14px;
+border-left:4px solid var(--green);
+}
+.mock-q-text{font-family:var(--mono); font-weight:700; font-size:0.92rem; margin:0 0 10px;}
+.mock-option{
+display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px;
+margin-bottom:4px; cursor:pointer; font-size:0.95rem;
+}
+.mock-option:hover{background:rgba(76,175,125,0.08);}
+.mock-option.correct{background:rgba(76,175,125,0.22); font-weight:700;}
+.mock-option.incorrect{background:rgba(232,84,62,0.18); text-decoration:line-through;}
 
 /* ---------- Ask Anything ---------- */
 .ask-wrap{
@@ -332,7 +370,7 @@ footer a:hover{text-decoration:underline;}
 /* ---------- Responsive ---------- */
 @media (max-width:640px){
 .header-inner{flex-direction:column; align-items:flex-start;}
-nav{gap:14px; flex-wrap:wrap; font-size:0.8rem;}
+nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 .hero{padding:44px 0 32px;}
 .corkboard{padding:24px 18px;}
 .panel-wrap{padding:22px 18px;}
@@ -352,6 +390,7 @@ nav{gap:14px; flex-wrap:wrap; font-size:0.8rem;}
 <nav>
 <a href="#quick">Quick Answers</a>
 <a href="#help">Homework Help</a>
+<a href="#mocktest">Mock Tests</a>
 <a href="#ask">Ask Anything</a>
 <a href="#advice">Advice</a>
 </nav>
@@ -442,6 +481,33 @@ nav{gap:14px; flex-wrap:wrap; font-size:0.8rem;}
 <li><strong>Compare, don't just list.</strong> Compare causes and effects across events instead of listing facts — it shows deeper understanding.</li>
 </ul>
 </div>
+</div>
+</section>
+
+<section id="mocktest">
+<div class="section-head">
+<h2>📝 Mock Tests</h2>
+<p>Pick your class and subject, then test yourself with a quick 5-question quiz.</p>
+</div>
+<div class="mock-wrap reveal">
+<div class="mock-controls">
+<select id="mockClass">
+<option value="6">Class 6</option>
+<option value="7">Class 7</option>
+<option value="8">Class 8</option>
+</select>
+<select id="mockSubject">
+<option value="math">Math</option>
+<option value="science">Science</option>
+<option value="english">English</option>
+<option value="history">History</option>
+<option value="geography">Geography</option>
+<option value="computer">Computer Basics</option>
+</select>
+<button class="btn btn-solid" onclick="loadMockTest()">Start Test</button>
+</div>
+<p class="mock-note">More classes and subjects coming soon — this is just the start!</p>
+<div id="mockTestArea"></div>
 </div>
 </section>
 
@@ -546,6 +612,213 @@ document.getElementById('ask').scrollIntoView({behavior:'smooth'});
 setTimeout(() => {
 document.getElementById('questionInput').focus();
 }, 450);
+}
+
+// ---------- Mock Tests ----------
+const mockTestData = {
+"6": {
+"math": [
+{q:"What is the smallest whole number?", options:["1","0","-1","10"], correct:1},
+{q:"Which of these is a prime number?", options:["4","6","9","7"], correct:3},
+{q:"What is 3/4 as a decimal?", options:["0.34","0.75","0.43","3.4"], correct:1},
+{q:"How many sides does a hexagon have?", options:["5","6","7","8"], correct:1},
+{q:"What is the LCM of 4 and 6?", options:["10","12","24","6"], correct:1}
+],
+"science": [
+{q:"Which of these is a herbivore?", options:["Lion","Cow","Tiger","Wolf"], correct:1},
+{q:"Which gas do plants absorb from air to make their own food?", options:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], correct:2},
+{q:"Which of these materials is a good conductor of electricity?", options:["Wood","Plastic","Copper","Rubber"], correct:2},
+{q:"What is the process of separating solid particles from a liquid using a cloth called?", options:["Evaporation","Filtration","Condensation","Freezing"], correct:1},
+{q:"Which of these does NOT produce its own light?", options:["Sun","Candle","Bulb","Moon"], correct:3}
+],
+"english": [
+{q:"Which word is a noun in this sentence: The dog ran fast?", options:["ran","fast","dog","the"], correct:2},
+{q:"What is the plural of 'child'?", options:["childs","childes","children","child's"], correct:2},
+{q:"Choose the correct verb: 'She ___ to school every day.'", options:["go","goes","going","gone"], correct:1},
+{q:"Which of these is an adjective?", options:["quickly","beautiful","run","house"], correct:1},
+{q:"What is the opposite (antonym) of 'happy'?", options:["joyful","glad","sad","excited"], correct:2}
+],
+"history": [
+{q:"Which ancient civilization built the cities of Harappa and Mohenjodaro?", options:["Roman","Indus Valley","Egyptian","Greek"], correct:1},
+{q:"Who was the founder of Buddhism?", options:["Mahavira","Ashoka","Gautama Buddha","Chandragupta"], correct:2},
+{q:"What were the earliest humans mainly dependent on for food?", options:["Farming","Hunting and gathering","Trading","Fishing only"], correct:1},
+{q:"The Harappan civilization is associated with which river?", options:["Ganga","Indus","Yamuna","Godavari"], correct:1},
+{q:"Ashoka belonged to which dynasty?", options:["Gupta","Maurya","Mughal","Chola"], correct:1}
+],
+"geography": [
+{q:"Which planet is known as the 'Red Planet'?", options:["Venus","Jupiter","Mars","Saturn"], correct:2},
+{q:"What is the imaginary line dividing the Earth into Northern and Southern Hemispheres called?", options:["Prime Meridian","Equator","Tropic of Cancer","Axis"], correct:1},
+{q:"How long does the Earth take to complete one rotation on its axis?", options:["12 hours","24 hours","365 days","30 days"], correct:1},
+{q:"Which is the largest continent?", options:["Africa","Asia","Europe","Australia"], correct:1},
+{q:"Lines of latitude are also known as?", options:["Meridians","Parallels","Longitudes","Tropics"], correct:1}
+],
+"computer": [
+{q:"Which of these is an input device?", options:["Monitor","Printer","Keyboard","Speaker"], correct:2},
+{q:"What does CPU stand for?", options:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Central Processor Utility"], correct:0},
+{q:"Which of these is an output device?", options:["Mouse","Keyboard","Monitor","Scanner"], correct:2},
+{q:"What is the 'brain' of the computer called?", options:["Monitor","CPU","Keyboard","Mouse"], correct:1},
+{q:"Which of these is used to save your work permanently?", options:["RAM","Hard Disk","Monitor","Keyboard"], correct:1}
+]
+},
+"7": {
+"math": [
+{q:"What is (-5) + 8?", options:["-13","3","13","-3"], correct:1},
+{q:"What is 25% of 200?", options:["25","40","50","75"], correct:2},
+{q:"Solve: x + 5 = 12. What is x?", options:["5","6","7","17"], correct:2},
+{q:"What is the sum of angles in a triangle?", options:["90 degrees","180 degrees","270 degrees","360 degrees"], correct:1},
+{q:"What is (-3) × (-4)?", options:["-12","12","-7","7"], correct:1}
+],
+"science": [
+{q:"What is the process by which green plants make their own food called?", options:["Respiration","Photosynthesis","Digestion","Transpiration"], correct:1},
+{q:"Which gas do we breathe in during respiration?", options:["Carbon dioxide","Nitrogen","Oxygen","Hydrogen"], correct:2},
+{q:"Litmus paper turns red in the presence of?", options:["A base","Water","An acid","Salt"], correct:2},
+{q:"What is the SI unit of time?", options:["Minute","Hour","Second","Day"], correct:2},
+{q:"Which of these is a natural fibre?", options:["Nylon","Polyester","Cotton","Rayon"], correct:2}
+],
+"english": [
+{q:"Choose the correct preposition: 'The book is ___ the table.'", options:["in","on","at","under"], correct:1},
+{q:"What is the past tense of 'go'?", options:["goed","went","gone","going"], correct:1},
+{q:"Which of these is a conjunction?", options:["quickly","and","beautiful","run"], correct:1},
+{q:"Identify the pronoun: '___ is my best friend.'", options:["Ravi","She","Happy","Quickly"], correct:1},
+{q:"What is a synonym of 'happy'?", options:["sad","joyful","angry","tired"], correct:1}
+],
+"history": [
+{q:"Who founded the Mughal Empire in India?", options:["Akbar","Humayun","Babur","Shah Jahan"], correct:2},
+{q:"The Delhi Sultanate was ruled by how many major dynasties?", options:["3","4","5","6"], correct:2},
+{q:"Which Mughal emperor built the Taj Mahal?", options:["Akbar","Jahangir","Shah Jahan","Aurangzeb"], correct:2},
+{q:"Akbar was the grandson of which Mughal emperor?", options:["Humayun","Babur","Shah Jahan","Jahangir"], correct:1},
+{q:"What does the term 'Sultan' generally mean?", options:["Farmer","Priest","King/ruler","Soldier"], correct:2}
+],
+"geography": [
+{q:"What are the three layers of the Earth called (outer to inner)?", options:["Crust, Mantle, Core","Soil, Rock, Magma","Surface, Middle, Center","Land, Sea, Sky"], correct:0},
+{q:"Which natural process mainly causes earthquakes?", options:["Rainfall","Movement of tectonic plates","Wind","Ocean currents"], correct:1},
+{q:"What is the layer of gases surrounding the Earth called?", options:["Atmosphere","Biosphere","Lithosphere","Hydrosphere"], correct:0},
+{q:"Which of these is a renewable resource?", options:["Coal","Petroleum","Wind","Natural gas"], correct:2},
+{q:"What do we call the permanent shifting of people from one place to another?", options:["Migration","Population","Settlement","Urbanisation"], correct:0}
+],
+"computer": [
+{q:"Which of these is system software?", options:["MS Word","Windows OS","Photoshop","Chrome"], correct:1},
+{q:"What does 'WWW' stand for?", options:["World Wide Web","World Wide Wire","Web Wide World","World Web Wire"], correct:0},
+{q:"Which of these is an example of hardware?", options:["Operating System","Antivirus","Mouse","Browser"], correct:2},
+{q:"What is a group of 8 bits called?", options:["1 Byte","1 Bit","1 Pixel","1 Kilobyte"], correct:0},
+{q:"Which of these is used to connect to the internet?", options:["Modem","Printer","Speaker","Monitor"], correct:0}
+]
+},
+"8": {
+"math": [
+{q:"What is the square root of 144?", options:["11","12","13","14"], correct:1},
+{q:"Solve: 2x + 3 = 11. What is x?", options:["3","4","5","6"], correct:1},
+{q:"What is 5 squared (5²)?", options:["10","15","25","55"], correct:2},
+{q:"What is the formula for the area of a rectangle?", options:["length + breadth","length × breadth","2(length + breadth)","length ÷ breadth"], correct:1},
+{q:"What is (2)³ (2 cubed)?", options:["4","6","8","9"], correct:2}
+],
+"science": [
+{q:"What is the basic structural and functional unit of life called?", options:["Tissue","Organ","Cell","Molecule"], correct:2},
+{q:"Which force opposes the relative motion between two surfaces in contact?", options:["Gravity","Friction","Magnetism","Tension"], correct:1},
+{q:"Coal and petroleum are examples of which type of resource?", options:["Renewable resources","Fossil fuels","Biotic resources","Water resources"], correct:1},
+{q:"Which part of the plant mainly conducts photosynthesis?", options:["Roots","Stem","Leaves","Flowers"], correct:2},
+{q:"What causes an echo?", options:["Absorption of sound","Reflection of sound","Refraction of sound","Diffraction of sound"], correct:1}
+],
+"english": [
+{q:"Convert to passive voice: 'She writes a letter.'", options:["A letter is written by her.","A letter was written by her.","She is writing a letter.","A letter writes her."], correct:0},
+{q:"Choose the sentence written in passive voice.", options:["The cat chased the mouse.","The mouse was chased by the cat.","The cat is chasing the mouse.","The cat will chase the mouse."], correct:1},
+{q:"What is the correct plural of 'mouse' (the animal)?", options:["mouses","mice","mices","mouse's"], correct:1},
+{q:"Identify the adverb: 'He runs quickly.'", options:["He","runs","quickly","."], correct:2},
+{q:"Which of these is a compound word?", options:["Sunflower","Beautiful","Running","Happiness"], correct:0}
+],
+"history": [
+{q:"In which year did the Revolt of 1857 take place?", options:["1757","1857","1947","1900"], correct:1},
+{q:"Which company established British control over India through trade?", options:["The East India Company","The Dutch Company","The Portuguese Company","The French Company"], correct:0},
+{q:"Who is known as the 'Father of the Nation' in India?", options:["Jawaharlal Nehru","Sardar Patel","Mahatma Gandhi","Subhas Chandra Bose"], correct:2},
+{q:"In which year did India gain independence?", options:["1942","1945","1947","1950"], correct:2},
+{q:"The Battle of Plassey was fought in which year?", options:["1757","1857","1707","1857"], correct:0}
+],
+"geography": [
+{q:"What is the topmost layer of Earth's surface, made of fine particles, called?", options:["Rock","Soil","Sand","Clay"], correct:1},
+{q:"Which sector is agriculture classified under?", options:["Primary sector","Secondary sector","Tertiary sector","Quaternary sector"], correct:0},
+{q:"What is the term for natural resources that can be replenished, like sunlight and wind?", options:["Non-renewable resources","Renewable resources","Mineral resources","Fossil resources"], correct:1},
+{q:"Which of these is a rabi crop (grown in winter)?", options:["Rice","Wheat","Cotton","Sugarcane"], correct:1},
+{q:"What is the term for industries based on agricultural raw materials, like sugar or textiles?", options:["Mineral-based industries","Agro-based industries","Forest-based industries","Marine-based industries"], correct:1}
+],
+"computer": [
+{q:"What does 'URL' stand for?", options:["Uniform Resource Locator","Universal Resource Link","United Resource Locator","Uniform Reference Link"], correct:0},
+{q:"Which of these is an example of an operating system?", options:["MS Excel","Linux","Google Chrome","MS Paint"], correct:1},
+{q:"What is a computer virus?", options:["A helpful software update","A malicious program that can harm a computer","A type of hardware","An antivirus tool"], correct:1},
+{q:"Which symbol separates the username from the domain in an email address?", options:["#","@","&","%"], correct:1},
+{q:"What does 'HTTP' stand for?", options:["HyperText Transfer Protocol","High Transfer Text Protocol","HyperText Technical Protocol","Home Text Transfer Protocol"], correct:0}
+]
+}
+};
+
+function loadMockTest(){
+const cls = document.getElementById('mockClass').value;
+const subj = document.getElementById('mockSubject').value;
+const questions = mockTestData[cls][subj];
+const area = document.getElementById('mockTestArea');
+area.innerHTML = '';
+
+const resultBox = document.createElement('div');
+resultBox.id = 'mockResult';
+resultBox.className = 'mock-result';
+area.appendChild(resultBox);
+
+questions.forEach((q, qi) => {
+const qDiv = document.createElement('div');
+qDiv.className = 'mock-question';
+qDiv.dataset.correct = q.correct;
+
+const qText = document.createElement('p');
+qText.className = 'mock-q-text';
+qText.textContent = (qi + 1) + '. ' + q.q;
+qDiv.appendChild(qText);
+
+q.options.forEach((opt, oi) => {
+const label = document.createElement('label');
+label.className = 'mock-option';
+const radio = document.createElement('input');
+radio.type = 'radio';
+radio.name = 'mockq' + qi;
+radio.value = oi;
+label.appendChild(radio);
+label.appendChild(document.createTextNode(opt));
+qDiv.appendChild(label);
+});
+
+area.appendChild(qDiv);
+});
+
+const submitBtn = document.createElement('button');
+submitBtn.className = 'btn btn-solid';
+submitBtn.textContent = 'Submit Test';
+submitBtn.onclick = submitMockTest;
+area.appendChild(submitBtn);
+
+area.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function submitMockTest(){
+const questions = document.querySelectorAll('.mock-question');
+let score = 0;
+questions.forEach((qDiv, qi) => {
+const correct = parseInt(qDiv.dataset.correct);
+const selected = qDiv.querySelector('input[name="mockq' + qi + '"]:checked');
+const labels = qDiv.querySelectorAll('.mock-option');
+labels.forEach((label, oi) => {
+label.classList.remove('correct', 'incorrect');
+if(oi === correct){
+label.classList.add('correct');
+} else if(selected && parseInt(selected.value) === oi){
+label.classList.add('incorrect');
+}
+});
+if(selected && parseInt(selected.value) === correct){
+score++;
+}
+});
+const resultBox = document.getElementById('mockResult');
+resultBox.textContent = 'You scored ' + score + ' / ' + questions.length;
+resultBox.className = 'mock-result visible';
+resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
 // ---------- Quick Answers search ----------
