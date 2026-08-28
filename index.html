@@ -271,6 +271,15 @@ font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--green);
 margin-bottom:16px; display:none; padding:12px 16px; background:rgba(76,175,125,0.1); border-radius:8px;
 }
 .mock-result.visible{display:block;}
+.mock-result.perfect{
+background:rgba(255,210,63,0.3); color:var(--ink); border:2px solid var(--highlighter);
+animation:perfectPulse 0.5s ease;
+}
+@keyframes perfectPulse{
+0%{transform:scale(0.94);}
+60%{transform:scale(1.04);}
+100%{transform:scale(1);}
+}
 .mock-question{
 background:var(--paper); border-radius:10px; padding:16px 18px; margin-bottom:14px;
 border-left:4px solid var(--green);
@@ -283,6 +292,17 @@ margin-bottom:4px; cursor:pointer; font-size:0.95rem;
 .mock-option:hover{background:rgba(76,175,125,0.08);}
 .mock-option.correct{background:rgba(76,175,125,0.22); font-weight:700;}
 .mock-option.incorrect{background:rgba(232,84,62,0.18); text-decoration:line-through;}
+
+/* ---------- Confetti celebration ---------- */
+.confetti-piece{
+position:fixed; top:-20px; width:9px; height:14px; opacity:0.95;
+z-index:999; pointer-events:none; border-radius:2px;
+animation-name:confettiFall; animation-timing-function:ease-in; animation-fill-mode:forwards;
+}
+@keyframes confettiFall{
+0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+100%{ transform:translateY(100vh) rotate(560deg); opacity:0; }
+}
 
 /* ---------- Ask Anything ---------- */
 .ask-wrap{
@@ -614,6 +634,22 @@ document.getElementById('questionInput').focus();
 }, 450);
 }
 
+// ---------- Confetti celebration ----------
+function celebrate(){
+const colors = ['#3E8EDE','#4CAF7D','#CE9A25','#E8543E','#8B6FCE','#FFD23F'];
+for(let i = 0; i < 60; i++){
+const piece = document.createElement('div');
+piece.className = 'confetti-piece';
+piece.style.left = (Math.random() * 100) + 'vw';
+piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+const duration = (1.8 + Math.random() * 1.2);
+piece.style.animationDuration = duration + 's';
+piece.style.animationDelay = (Math.random() * 0.4) + 's';
+document.body.appendChild(piece);
+setTimeout(() => piece.remove(), (duration + 0.6) * 1000);
+}
+}
+
 // ---------- Mock Tests ----------
 const mockTestData = {
 "6": {
@@ -731,7 +767,7 @@ const mockTestData = {
 {q:"Which company established British control over India through trade?", options:["The East India Company","The Dutch Company","The Portuguese Company","The French Company"], correct:0},
 {q:"Who is known as the 'Father of the Nation' in India?", options:["Jawaharlal Nehru","Sardar Patel","Mahatma Gandhi","Subhas Chandra Bose"], correct:2},
 {q:"In which year did India gain independence?", options:["1942","1945","1947","1950"], correct:2},
-{q:"The Battle of Plassey was fought in which year?", options:["1757","1857","1707","1857"], correct:0}
+{q:"The Battle of Plassey was fought in which year?", options:["1757","1857","1707","1900"], correct:0}
 ],
 "geography": [
 {q:"What is the topmost layer of Earth's surface, made of fine particles, called?", options:["Rock","Soil","Sand","Clay"], correct:1},
@@ -816,8 +852,15 @@ score++;
 }
 });
 const resultBox = document.getElementById('mockResult');
+resultBox.classList.remove('perfect');
+if(score === questions.length){
+resultBox.textContent = '🎉 Perfect score! ' + score + ' / ' + questions.length;
+resultBox.classList.add('perfect');
+celebrate();
+} else {
 resultBox.textContent = 'You scored ' + score + ' / ' + questions.length;
-resultBox.className = 'mock-result visible';
+}
+resultBox.className = 'mock-result visible' + (score === questions.length ? ' perfect' : '');
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
