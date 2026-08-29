@@ -30,6 +30,14 @@ if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
 <!-- Favicon (a little yellow "L" tab, no separate image file needed) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23FFD23F'/><text x='32' y='45' font-family='monospace' font-weight='800' font-size='36' fill='%231C2B3A' text-anchor='middle'>L</text></svg>">
 
+<!-- Installable app support (PWA) -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1C2B3A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Locker Notes">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -640,6 +648,13 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 </footer>
 
 <script>
+// ---------- PWA install support ----------
+if('serviceWorker' in navigator){
+window.addEventListener('load', () => {
+navigator.serviceWorker.register('sw.js').catch(() => {});
+});
+}
+
 // ---------- Dark mode ----------
 function toggleTheme(){
 const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
