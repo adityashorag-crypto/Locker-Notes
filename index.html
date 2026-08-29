@@ -6,6 +6,16 @@
 <title>Locker Notes — Homework Help &amp; Advice, By an 8th Grader</title>
 <meta name="description" content="Free instant homework help and advice for students. Ask anything, get an answer right away — no sign-up needed.">
 
+<!-- Set dark mode before the page paints, to avoid a flash of the wrong theme -->
+<script>
+(function(){
+try{
+var t = localStorage.getItem('lockerNotesTheme');
+if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
+}catch(e){}
+})();
+</script>
+
 <!-- Social preview (shows up when you share the link on WhatsApp, Instagram, X, etc.) -->
 <meta property="og:title" content="Locker Notes — Free Homework Help & Advice">
 <meta property="og:description" content="Free instant homework help and advice for students, built by an 8th grader. Ask anything, get an answer right away.">
@@ -35,6 +45,8 @@
 --panel:#FFFFFF;
 --ink:#1C2B3A;
 --ink-soft:#51616F;
+--dark-navy:#1C2B3A;
+--cream:#F2F6EC;
 --highlighter:#FFD23F;
 --blue:#3E8EDE;
 --green:#4CAF7D;
@@ -45,6 +57,13 @@
 --shadow:0 6px 18px rgba(28,43,58,0.08);
 --mono:'JetBrains Mono', ui-monospace, monospace;
 --sans:'Inter', system-ui, sans-serif;
+}
+:root[data-theme="dark"]{
+--paper:#121A22;
+--paper-line:#232F3A;
+--panel:#1B2530;
+--ink:#E8EEF2;
+--ink-soft:#9FB0BD;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -68,6 +87,7 @@ color:var(--ink);
 font-family:var(--sans);
 line-height:1.5;
 -webkit-font-smoothing:antialiased;
+transition: background-color 0.3s ease, color 0.3s ease;
 }
 a{color:var(--blue);}
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
@@ -79,18 +99,18 @@ border-radius:4px;
 
 /* ---------- Header : spiral notebook edge ---------- */
 header{
-background:var(--ink);
-color:var(--paper);
+background:var(--dark-navy);
+color:var(--cream);
 padding-top:22px;
 position:relative;
 }
 .spiral{
 height:26px;
-background-image: radial-gradient(circle 6px, var(--paper) 5px, transparent 5.5px);
+background-image: radial-gradient(circle 6px, var(--cream) 5px, transparent 5.5px);
 background-size:34px 26px;
 background-position: 17px center;
 background-repeat:repeat-x;
-background-color:var(--ink);
+background-color:var(--dark-navy);
 }
 .thread{
 height:4px;
@@ -107,15 +127,22 @@ display:flex; align-items:baseline; gap:10px;
 }
 .brand-tab{
 font-family:var(--mono); font-weight:800; font-size:1.15rem;
-background:var(--highlighter); color:var(--ink);
+background:var(--highlighter); color:var(--dark-navy);
 padding:6px 12px; border-radius:6px;
 transform:rotate(-2deg);
 box-shadow:var(--shadow);
 }
 .brand-sub{ font-family:var(--mono); font-size:0.75rem; color:#B9C6CF; letter-spacing:0.04em;}
 nav{display:flex; gap:18px; font-family:var(--mono); font-size:0.82rem; flex-wrap:wrap;}
-nav a{color:var(--paper); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color 0.2s ease, color 0.2s ease;}
+nav a{color:var(--cream); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color 0.2s ease, color 0.2s ease;}
 nav a:hover{border-bottom-color:var(--highlighter);}
+.theme-toggle{
+background:transparent; border:2px solid rgba(242,246,236,0.35); border-radius:8px;
+color:var(--cream); font-size:1rem; padding:6px 10px; cursor:pointer; line-height:1;
+transition:background 0.2s ease, transform 0.15s ease;
+}
+.theme-toggle:hover{background:rgba(242,246,236,0.12);}
+.theme-toggle:active{transform:scale(0.92);}
 
 /* ---------- Hero ---------- */
 .hero{padding:64px 0 48px; position:relative; overflow:hidden;}
@@ -149,7 +176,15 @@ font-size:clamp(2rem, 5vw, 3.2rem);
 line-height:1.08; margin:0 0 18px; letter-spacing:-0.01em;
 }
 h1 .hl{
-background:linear-gradient(transparent 62%, var(--highlighter) 62%);
+background-image: linear-gradient(transparent 62%, var(--highlighter) 62%);
+background-repeat: no-repeat;
+background-size: 0% 100%;
+color: var(--dark-navy);
+animation: highlightSweep 0.7s ease-out 0.3s forwards;
+padding: 0 2px;
+}
+@keyframes highlightSweep{
+to { background-size: 100% 100%; }
 }
 .hero p{
 font-size:1.08rem; color:var(--ink-soft); max-width:52ch; margin:0 0 28px;
@@ -220,6 +255,7 @@ background:#E4EADB; color:var(--ink-soft);
 position:relative; top:2px;
 transition:color 0.15s ease, background 0.15s ease, transform 0.1s ease;
 }
+:root[data-theme="dark"] .tab-btn{background:#232F3A;}
 .tab-btn:active{transform:scale(0.96);}
 .tab-btn[aria-selected="true"]{
 background:var(--panel); color:var(--ink);
@@ -266,13 +302,16 @@ border:2px solid var(--paper-line); background:var(--paper); color:var(--ink);
 }
 .mock-controls select:focus{border-color:var(--green); outline:none;}
 .mock-note{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 18px;}
+.mock-best-info{font-family:var(--mono); font-size:0.85rem; color:var(--ink-soft); margin:0 0 12px;}
+.mock-progress-track{width:100%; height:8px; background:var(--paper-line); border-radius:4px; overflow:hidden; margin-bottom:18px;}
+.mock-progress-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--green), var(--blue)); transition:width 0.3s ease;}
 .mock-result{
 font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--green);
 margin-bottom:16px; display:none; padding:12px 16px; background:rgba(76,175,125,0.1); border-radius:8px;
 }
 .mock-result.visible{display:block;}
 .mock-result.perfect{
-background:rgba(255,210,63,0.3); color:var(--ink); border:2px solid var(--highlighter);
+background:rgba(255,210,63,0.3); color:var(--dark-navy); border:2px solid var(--highlighter);
 animation:perfectPulse 0.5s ease;
 }
 @keyframes perfectPulse{
@@ -334,6 +373,7 @@ background:#fff; border-left:4px solid var(--coral); border-radius:0 8px 8px 0;
 padding:10px 14px; font-family:var(--mono); font-size:0.85rem; color:var(--ink);
 box-shadow:var(--shadow); max-width:100%;
 }
+:root[data-theme="dark"] .flow-step{background:var(--panel);}
 .flow-arrow{font-family:var(--mono); font-weight:700; color:var(--coral); font-size:1rem; padding-left:14px;}
 
 /* ---------- Advice corkboard ---------- */
@@ -351,6 +391,7 @@ box-shadow:0 8px 14px rgba(0,0,0,0.16);
 font-size:0.92rem;
 transition:transform 0.15s ease, box-shadow 0.15s ease;
 position:relative;
+color:var(--dark-navy);
 }
 .note::before{
 content:"";
@@ -372,7 +413,7 @@ box-shadow:0 2px 3px rgba(0,0,0,0.35);
 .note:nth-child(5):hover{transform:rotate(-2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
 .note:nth-child(6):hover{transform:rotate(1.8deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
 .note p{margin:0;}
-.note strong{display:block; font-family:var(--mono); font-size:0.8rem; margin-bottom:6px; color:var(--ink-soft);}
+.note strong{display:block; font-family:var(--mono); font-size:0.8rem; margin-bottom:6px; color:#51616F;}
 
 /* ---------- Share section ---------- */
 .share-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
@@ -380,7 +421,7 @@ box-shadow:0 2px 3px rgba(0,0,0,0.35);
 
 /* ---------- Footer ---------- */
 footer{
-background:var(--ink); color:#B9C6CF; padding:36px 24px 28px;
+background:var(--dark-navy); color:#B9C6CF; padding:36px 24px 28px;
 margin-top:24px; text-align:center;
 }
 footer p{font-family:var(--mono); font-size:0.8rem; margin:0 0 6px;}
@@ -414,6 +455,7 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <a href="#ask">Ask Anything</a>
 <a href="#advice">Advice</a>
 </nav>
+<button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
 </div>
 </header>
 
@@ -598,6 +640,21 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 </footer>
 
 <script>
+// ---------- Dark mode ----------
+function toggleTheme(){
+const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+const next = current === 'dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme', next);
+const btn = document.getElementById('themeToggleBtn');
+if(btn) btn.textContent = next === 'dark' ? '☀️' : '🌙';
+try{ localStorage.setItem('lockerNotesTheme', next); }catch(e){}
+}
+(function initThemeIcon(){
+const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+const btn = document.getElementById('themeToggleBtn');
+if(btn) btn.textContent = current === 'dark' ? '☀️' : '🌙';
+})();
+
 // ---------- Homework Help tab switching ----------
 const tabButtons = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.panel');
@@ -786,17 +843,77 @@ const mockTestData = {
 }
 };
 
+function getBestKey(cls, subj){
+return 'lockerNotesBest_' + cls + '_' + subj;
+}
+function getBestScore(cls, subj){
+try{
+const v = localStorage.getItem(getBestKey(cls, subj));
+return v === null ? null : parseInt(v);
+}catch(e){ return null; }
+}
+function setBestScore(cls, subj, score){
+try{ localStorage.setItem(getBestKey(cls, subj), score); }catch(e){}
+}
+
+function updateMockProgress(total){
+const answered = new Set();
+document.querySelectorAll('#mockTestArea input[type=radio]:checked').forEach(input => {
+answered.add(input.name);
+});
+const fill = document.getElementById('mockProgressFill');
+if(fill){
+fill.style.width = (answered.size / total * 100) + '%';
+}
+}
+
+function animateScoreCount(el, finalScore, total, prefixText, suffixText){
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduceMotion || finalScore === 0){
+el.textContent = prefixText + finalScore + ' / ' + total + suffixText;
+return;
+}
+let current = 0;
+const stepTime = Math.max(40, 600 / finalScore);
+const interval = setInterval(() => {
+current++;
+el.textContent = prefixText + current + ' / ' + total;
+if(current >= finalScore){
+clearInterval(interval);
+el.textContent = prefixText + finalScore + ' / ' + total + suffixText;
+}
+}, stepTime);
+}
+
 function loadMockTest(){
 const cls = document.getElementById('mockClass').value;
 const subj = document.getElementById('mockSubject').value;
 const questions = mockTestData[cls][subj];
 const area = document.getElementById('mockTestArea');
 area.innerHTML = '';
+area.dataset.cls = cls;
+area.dataset.subj = subj;
 
 const resultBox = document.createElement('div');
 resultBox.id = 'mockResult';
 resultBox.className = 'mock-result';
 area.appendChild(resultBox);
+
+const bestScore = getBestScore(cls, subj);
+const bestInfo = document.createElement('p');
+bestInfo.className = 'mock-best-info';
+bestInfo.textContent = bestScore !== null
+? ('Your best on this test: ' + bestScore + ' / ' + questions.length)
+: "You haven't attempted this test yet.";
+area.appendChild(bestInfo);
+
+const progressTrack = document.createElement('div');
+progressTrack.className = 'mock-progress-track';
+const progressFill = document.createElement('div');
+progressFill.className = 'mock-progress-fill';
+progressFill.id = 'mockProgressFill';
+progressTrack.appendChild(progressFill);
+area.appendChild(progressTrack);
 
 questions.forEach((q, qi) => {
 const qDiv = document.createElement('div');
@@ -815,6 +932,7 @@ const radio = document.createElement('input');
 radio.type = 'radio';
 radio.name = 'mockq' + qi;
 radio.value = oi;
+radio.addEventListener('change', () => updateMockProgress(questions.length));
 label.appendChild(radio);
 label.appendChild(document.createTextNode(opt));
 qDiv.appendChild(label);
@@ -833,6 +951,9 @@ area.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function submitMockTest(){
+const area = document.getElementById('mockTestArea');
+const cls = area.dataset.cls;
+const subj = area.dataset.subj;
 const questions = document.querySelectorAll('.mock-question');
 let score = 0;
 questions.forEach((qDiv, qi) => {
@@ -851,16 +972,30 @@ if(selected && parseInt(selected.value) === correct){
 score++;
 }
 });
-const resultBox = document.getElementById('mockResult');
-resultBox.classList.remove('perfect');
-if(score === questions.length){
-resultBox.textContent = '🎉 Perfect score! ' + score + ' / ' + questions.length;
-resultBox.classList.add('perfect');
-celebrate();
-} else {
-resultBox.textContent = 'You scored ' + score + ' / ' + questions.length;
+
+const prevBest = getBestScore(cls, subj);
+const isNewBest = prevBest === null || score > prevBest;
+if(isNewBest){
+setBestScore(cls, subj, score);
 }
-resultBox.className = 'mock-result visible' + (score === questions.length ? ' perfect' : '');
+
+const resultBox = document.getElementById('mockResult');
+const isPerfect = score === questions.length;
+resultBox.className = 'mock-result visible' + (isPerfect ? ' perfect' : '');
+
+let prefixText, suffixText;
+if(isPerfect){
+prefixText = '🎉 Perfect score! ';
+suffixText = '';
+celebrate();
+} else if(isNewBest){
+prefixText = 'You scored ';
+suffixText = ' — 🏆 New best!';
+} else {
+prefixText = 'You scored ';
+suffixText = '';
+}
+animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
