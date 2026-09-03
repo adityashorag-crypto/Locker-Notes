@@ -48,8 +48,8 @@ if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
 
 <style>
 :root{
---paper:#F2F6EC;
---paper-line:#DCE8D0;
+--paper:#F9FBF6;
+--paper-line:#E9F0DF;
 --panel:#FFFFFF;
 --ink:#1C2B3A;
 --ink-soft:#51616F;
@@ -83,11 +83,11 @@ body{
 margin:0;
 background:
 linear-gradient(var(--paper-line) 1px, transparent 1px),
-radial-gradient(circle at 8% 10%, rgba(62,142,222,0.14), transparent 32%),
-radial-gradient(circle at 92% 16%, rgba(139,111,206,0.15), transparent 32%),
-radial-gradient(circle at 12% 88%, rgba(76,175,125,0.13), transparent 32%),
-radial-gradient(circle at 88% 82%, rgba(232,84,62,0.12), transparent 32%),
-radial-gradient(circle at 50% 50%, rgba(206,154,37,0.08), transparent 45%);
+radial-gradient(circle at 8% 10%, rgba(62,142,222,0.07), transparent 32%),
+radial-gradient(circle at 92% 16%, rgba(139,111,206,0.07), transparent 32%),
+radial-gradient(circle at 12% 88%, rgba(76,175,125,0.06), transparent 32%),
+radial-gradient(circle at 88% 82%, rgba(232,84,62,0.06), transparent 32%),
+radial-gradient(circle at 50% 50%, rgba(206,154,37,0.04), transparent 45%);
 background-size: 100% 32px, cover, cover, cover, cover, cover;
 background-attachment: scroll, fixed, fixed, fixed, fixed, fixed;
 background-color:var(--paper);
@@ -187,7 +187,6 @@ h1 .hl{
 background-image: linear-gradient(transparent 62%, var(--highlighter) 62%);
 background-repeat: no-repeat;
 background-size: 0% 100%;
-color: var(--dark-navy);
 animation: highlightSweep 0.7s ease-out 0.3s forwards;
 padding: 0 2px;
 }
@@ -222,6 +221,7 @@ font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
 #ask .section-head h2{color:var(--coral);}
 #advice .section-head h2{color:var(--purple);}
 #share .section-head h2{color:var(--mustard);}
+#support .section-head h2{color:var(--mustard);}
 
 /* ---------- Scroll-reveal ---------- */
 .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease;}
@@ -638,6 +638,17 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <button class="btn btn-ghost" id="copyBtn" onclick="copyLink()">Copy link</button>
 <span class="copy-feedback" id="copyFeedback"></span>
 </div>
+</section>
+
+<section id="support">
+<div class="section-head">
+<h2>💛 Support Locker Notes</h2>
+<p>If Locker Notes has helped you, you're welcome to send a small UPI tip to help keep it running and growing. Totally optional — everything on the site stays free either way.</p>
+</div>
+<div class="share-row reveal">
+<a class="btn btn-solid" href="upi://pay?pa=YOUR_UPI_ID_HERE&pn=Locker%20Notes&cu=INR">💛 Support via UPI</a>
+</div>
+<p class="mock-note">Opens your UPI app (Google Pay, PhonePe, Paytm, etc.) if you're on a phone — you choose the amount. Won't do anything on a desktop browser.</p>
 </section>
 
 </main>
