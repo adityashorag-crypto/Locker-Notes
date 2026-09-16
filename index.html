@@ -144,7 +144,7 @@ transform:rotate(-2deg);
 box-shadow:var(--shadow);
 }
 .brand-sub{ font-family:var(--mono); font-size:0.75rem; color:#B9C6CF; letter-spacing:0.04em;}
-nav{display:flex; gap:18px; font-family:var(--mono); font-size:0.82rem; flex-wrap:wrap;}
+nav{display:flex; gap:16px; font-family:var(--mono); font-size:0.8rem; flex-wrap:wrap;}
 nav a{color:var(--cream); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color 0.2s ease, color 0.2s ease;}
 nav a:hover{border-bottom-color:var(--highlighter);}
 .theme-toggle{
@@ -218,6 +218,7 @@ section{padding:52px 0;}
 font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
 }
 .section-head p{color:var(--ink-soft); margin:0;}
+#classpicker .section-head h2{color:var(--coral);}
 #quick .section-head h2{color:var(--blue);}
 #help .section-head h2{color:var(--green);}
 #mocktest .section-head h2{color:var(--green);}
@@ -229,6 +230,29 @@ font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
 /* ---------- Scroll-reveal ---------- */
 .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease;}
 .reveal.in-view{opacity:1; transform:translateY(0);}
+
+/* ---------- Class Picker ---------- */
+.class-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px;
+border-top:4px solid var(--coral);
+}
+.class-grid{
+display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;
+}
+.class-btn{
+font-family:var(--mono); font-weight:700; font-size:0.95rem;
+padding:16px 8px; border-radius:10px; border:2px solid var(--paper-line);
+background:var(--paper); color:var(--ink); cursor:pointer;
+transition:transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.class-btn:hover{border-color:var(--coral);}
+.class-btn:active{transform:scale(0.95);}
+.class-btn.active{
+background:linear-gradient(120deg, var(--blue), var(--purple)); color:#fff; border-color:transparent;
+}
+.class-current{font-family:var(--mono); font-size:0.85rem; color:var(--ink-soft); margin:16px 0 0;}
+.class-current strong{color:var(--coral);}
 
 /* ---------- Quick Answers ---------- */
 .search-wrap{
@@ -342,6 +366,11 @@ margin-bottom:4px; cursor:pointer; font-size:0.95rem;
 .mock-option:hover{background:rgba(76,175,125,0.08);}
 .mock-option.correct{background:rgba(76,175,125,0.22); font-weight:700;}
 .mock-option.incorrect{background:rgba(232,84,62,0.18); text-decoration:line-through;}
+.mock-soon{
+background:var(--paper); border-radius:10px; padding:28px 22px; text-align:center;
+border:2px dashed var(--paper-line);
+}
+.mock-soon p{font-family:var(--mono); color:var(--ink-soft); margin:0; font-size:0.95rem;}
 
 /* ---------- Confetti celebration ---------- */
 .confetti-piece{
@@ -411,22 +440,18 @@ width:14px; height:14px; border-radius:50%;
 background:radial-gradient(circle at 35% 35%, #fff, var(--coral) 55%, #7a2418 100%);
 box-shadow:0 2px 3px rgba(0,0,0,0.35);
 }
-.note:nth-child(1){transform:rotate(-2.5deg); background:var(--highlighter);}
-.note:nth-child(2){transform:rotate(1.5deg); background:#B7E4C7;}
-.note:nth-child(3){transform:rotate(-1.2deg); background:#AFD4F2;}
-.note:nth-child(4){transform:rotate(2.4deg); background:#F3B8B0;}
-.note:nth-child(5){transform:rotate(-2deg); background:#E3D2F5;}
-.note:nth-child(6){transform:rotate(1.8deg); background:#F5E1B8;}
-.note:nth-child(1):hover{transform:rotate(-2.5deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-child(2):hover{transform:rotate(1.5deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-child(3):hover{transform:rotate(-1.2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-child(4):hover{transform:rotate(2.4deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-child(5):hover{transform:rotate(-2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
-.note:nth-child(6):hover{transform:rotate(1.8deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(6n+1){transform:rotate(-2.5deg); background:var(--highlighter);}
+.note:nth-child(6n+2){transform:rotate(1.5deg); background:#B7E4C7;}
+.note:nth-child(6n+3){transform:rotate(-1.2deg); background:#AFD4F2;}
+.note:nth-child(6n+4){transform:rotate(2.4deg); background:#F3B8B0;}
+.note:nth-child(6n+5){transform:rotate(-2deg); background:#E3D2F5;}
+.note:nth-child(6n+6){transform:rotate(1.8deg); background:#F5E1B8;}
+.note:hover{transform:scale(1.04) !important; box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
 .note p{margin:0;}
 .note strong{display:block; font-family:var(--mono); font-size:0.8rem; margin-bottom:6px; color:#51616F;}
+.advice-tier-label{font-family:var(--mono); font-size:0.78rem; color:var(--purple); font-weight:700; margin:0 0 16px;}
 
-/* ---------- Share section ---------- */
+/* ---------- Share / Support sections ---------- */
 .share-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
 .copy-feedback{font-family:var(--mono); font-size:0.78rem; color:var(--green); font-weight:700;}
 
@@ -446,6 +471,7 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 .hero{padding:44px 0 32px;}
 .corkboard{padding:24px 18px;}
 .panel-wrap{padding:22px 18px;}
+.class-grid{grid-template-columns:repeat(3, 1fr);}
 }
 </style>
 </head>
@@ -460,6 +486,7 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <span class="brand-sub">homework help &amp; advice</span>
 </div>
 <nav>
+<a href="#classpicker">Your Class</a>
 <a href="#quick">Quick Answers</a>
 <a href="#help">Homework Help</a>
 <a href="#mocktest">Mock Tests</a>
@@ -485,7 +512,18 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <p>Locker Notes is a free spot for students to get instant help — homework questions, study tips, or anything else you're not sure who to ask. Built by an 8th grader, for students like you.</p>
 <div class="cta-row">
 <button class="btn btn-solid" onclick="goToAsk()">Ask a question</button>
-<a href="#help" class="btn btn-ghost">Browse homework help</a>
+<a href="#classpicker" class="btn btn-ghost">Pick your class</a>
+</div>
+</section>
+
+<section id="classpicker">
+<div class="section-head">
+<h2>🎒 Select Your Class</h2>
+<p>This changes what you see in Mock Tests and Advice below, so it fits you.</p>
+</div>
+<div class="class-wrap reveal">
+<div class="class-grid" id="classGrid"></div>
+<p class="class-current">Currently showing content for <strong id="classCurrentLabel">Class 8</strong></p>
 </div>
 </section>
 
@@ -505,7 +543,7 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <section id="help">
 <div class="section-head">
 <h2>📚 Homework Help</h2>
-<p>Pick a subject for quick strategies, or head to Ask Anything for something specific.</p>
+<p>General study strategies that work across grades — pick a subject, or head to Ask Anything for something specific.</p>
 </div>
 <div class="tabbar" role="tablist">
 <button class="tab-btn" data-c="math" aria-selected="true">Math</button>
@@ -560,26 +598,10 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <section id="mocktest">
 <div class="section-head">
 <h2>📝 Mock Tests</h2>
-<p>Pick your class and subject, then test yourself with a quick 5-question quiz.</p>
+<p>Pick a subject, then test yourself with a quick 5-question quiz for your selected class.</p>
 </div>
 <div class="mock-wrap reveal">
-<div class="mock-controls">
-<select id="mockClass">
-<option value="6">Class 6</option>
-<option value="7">Class 7</option>
-<option value="8">Class 8</option>
-</select>
-<select id="mockSubject">
-<option value="math">Math</option>
-<option value="science">Science</option>
-<option value="english">English</option>
-<option value="history">History</option>
-<option value="geography">Geography</option>
-<option value="computer">Computer Basics</option>
-</select>
-<button class="btn btn-solid" onclick="loadMockTest()">Start Test</button>
-</div>
-<p class="mock-note">More classes and subjects coming soon — this is just the start!</p>
+<div id="mockControlsArea"></div>
 <div id="mockTestArea"></div>
 </div>
 </section>
@@ -600,33 +622,11 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 <section id="advice">
 <div class="section-head">
 <h2>📌 Advice Corkboard</h2>
-<p>A few things worth pinning up.</p>
+<p>A few things worth pinning up — changes based on your selected class.</p>
 </div>
-<div class="corkboard reveal">
-<div class="note">
-<strong>On failing a test</strong>
-<p>One bad grade is data, not a verdict. Figure out what went wrong, fix that one thing, and move on.</p>
-</div>
-<div class="note">
-<strong>On feeling behind</strong>
-<p>Everyone's on a different timeline. Compare yourself to who you were last month, not to everyone else.</p>
-</div>
-<div class="note">
-<strong>On friend drama</strong>
-<p>Give it a day before reacting. Most things feel smaller after you've slept on them.</p>
-</div>
-<div class="note">
-<strong>On procrastinating</strong>
-<p>Don't aim to "finish the assignment." Aim to work on it for 10 minutes. Starting is the hard part.</p>
-</div>
-<div class="note">
-<strong>On asking for help</strong>
-<p>Asking a question isn't admitting you're behind — it's how you stop being behind.</p>
-</div>
-<div class="note">
-<strong>On comparing yourself to others</strong>
-<p>Someone else's highlight reel isn't their everyday life. You're only ever seeing part of the story.</p>
-</div>
+<div class="reveal">
+<p class="advice-tier-label" id="adviceTierLabel"></p>
+<div class="corkboard" id="adviceCorkboard"></div>
 </div>
 </section>
 
@@ -662,13 +662,6 @@ nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
 </footer>
 
 <script>
-// ---------- PWA install support ----------
-if('serviceWorker' in navigator){
-window.addEventListener('load', () => {
-navigator.serviceWorker.register('sw.js').catch(() => {});
-});
-}
-
 // ---------- Dark mode ----------
 function toggleTheme(){
 const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
@@ -684,6 +677,13 @@ const btn = document.getElementById('themeToggleBtn');
 if(btn) btn.textContent = current === 'dark' ? '☀️' : '🌙';
 })();
 
+// ---------- PWA install support ----------
+if('serviceWorker' in navigator){
+window.addEventListener('load', () => {
+navigator.serviceWorker.register('sw.js').catch(() => {});
+});
+}
+
 // ---------- Homework Help tab switching ----------
 const tabButtons = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.panel');
@@ -697,7 +697,8 @@ document.querySelector('.panel[data-p="' + btn.dataset.c + '"]').classList.add('
 });
 
 // ---------- Scroll-reveal animation ----------
-const revealEls = document.querySelectorAll('.reveal');
+function initReveal(){
+const revealEls = document.querySelectorAll('.reveal:not(.in-view)');
 if('IntersectionObserver' in window){
 const io = new IntersectionObserver((entries) => {
 entries.forEach(entry => {
@@ -711,6 +712,8 @@ revealEls.forEach(el => io.observe(el));
 } else {
 revealEls.forEach(el => el.classList.add('in-view'));
 }
+}
+initReveal();
 
 // ---------- Jump to Ask Anything + auto-focus ----------
 function goToAsk(){
@@ -735,6 +738,39 @@ document.body.appendChild(piece);
 setTimeout(() => piece.remove(), (duration + 0.6) * 1000);
 }
 }
+
+// ---------- Class selector ----------
+let currentClass = 8;
+
+function getTier(cls){
+if(cls >= 1 && cls <= 5) return 'elementary';
+if(cls >= 6 && cls <= 10) return 'middle';
+return 'senior';
+}
+
+function buildClassGrid(){
+const grid = document.getElementById('classGrid');
+grid.innerHTML = '';
+for(let i = 1; i <= 12; i++){
+const btn = document.createElement('button');
+btn.className = 'class-btn' + (i === currentClass ? ' active' : '');
+btn.textContent = 'Class ' + i;
+btn.onclick = () => selectClass(i);
+grid.appendChild(btn);
+}
+}
+
+function selectClass(cls){
+currentClass = cls;
+document.querySelectorAll('.class-btn').forEach((btn, idx) => {
+btn.classList.toggle('active', idx + 1 === cls);
+});
+document.getElementById('classCurrentLabel').textContent = 'Class ' + cls;
+renderMockControls();
+renderAdvice();
+}
+
+buildClassGrid();
 
 // ---------- Mock Tests ----------
 const mockTestData = {
@@ -869,8 +905,141 @@ const mockTestData = {
 {q:"Which symbol separates the username from the domain in an email address?", options:["#","@","&","%"], correct:1},
 {q:"What does 'HTTP' stand for?", options:["HyperText Transfer Protocol","High Transfer Text Protocol","HyperText Technical Protocol","Home Text Transfer Protocol"], correct:0}
 ]
+},
+"9": {
+"math": [
+{q:"What type of number is \u221a2?", options:["Rational","Irrational","Whole","Natural"], correct:1},
+{q:"What is the degree of the polynomial 3x\u00b2 + 5x + 2?", options:["1","2","3","5"], correct:1},
+{q:"In coordinate geometry, what is the x-coordinate of a point called?", options:["Ordinate","Abscissa","Origin","Axis"], correct:1},
+{q:"What is the sum of the angles of a triangle?", options:["90 degrees","180 degrees","270 degrees","360 degrees"], correct:1},
+{q:"Heron's formula for the area of a triangle is based on which measurement?", options:["Its height only","Its three sides","Its angles only","Its perimeter only"], correct:1}
+],
+"science": [
+{q:"What is the fundamental unit of life?", options:["Tissue","Organ","Cell","Molecule"], correct:2},
+{q:"Who proposed the law of gravitation?", options:["Albert Einstein","Isaac Newton","Galileo Galilei","Charles Darwin"], correct:1},
+{q:"What is the SI unit of force?", options:["Joule","Watt","Newton","Pascal"], correct:2},
+{q:"Which particle in an atom has a negative charge?", options:["Proton","Neutron","Electron","Nucleus"], correct:2},
+{q:"What is the study of tissues called?", options:["Cytology","Histology","Anatomy","Physiology"], correct:1}
+],
+"english": [
+{q:"A metaphor is an example of what kind of language?", options:["Technical language","Figurative language","Formal language","Legal language"], correct:1},
+{q:"Identify the tense: 'She has finished her homework.'", options:["Simple past","Present perfect","Future perfect","Present continuous"], correct:1},
+{q:"What is a synonym of 'diligent'?", options:["Lazy","Hardworking","Careless","Slow"], correct:1},
+{q:"What is an antonym of 'ancient'?", options:["Old","Modern","Historic","Traditional"], correct:1},
+{q:"In a formal essay, what should the introduction include?", options:["A joke","A thesis statement","A conclusion","A bibliography"], correct:1}
+],
+"history": [
+{q:"In which year did the French Revolution begin?", options:["1776","1789","1804","1815"], correct:1},
+{q:"Who led the Bolshevik-led Russian Revolution of 1917?", options:["Joseph Stalin","Vladimir Lenin","Karl Marx","Nicholas II"], correct:1},
+{q:"Who was the leader of Nazi Germany?", options:["Otto von Bismarck","Kaiser Wilhelm","Adolf Hitler","Benito Mussolini"], correct:2},
+{q:"What does the term 'pastoralists' refer to?", options:["People who farm crops","People who herd livestock","People who work in factories","People who trade goods"], correct:1},
+{q:"The French Revolution led to the end of which form of government in France?", options:["Republic","Monarchy","Democracy","Colony"], correct:1}
+],
+"geography": [
+{q:"India is located in which hemisphere?", options:["Southern Hemisphere","Northern Hemisphere","Eastern only","Western only"], correct:1},
+{q:"Which mountain range is located in the north of India?", options:["The Aravallis","The Himalayas","The Western Ghats","The Vindhyas"], correct:1},
+{q:"Which river is commonly called the 'Ganga of the South'?", options:["Krishna","Kaveri","Godavari","Narmada"], correct:2},
+{q:"What is the term for the yearly cycle of seasonal winds affecting India's climate?", options:["Cyclone","Monsoon","Trade winds","Jet stream"], correct:1},
+{q:"Which type of forest is found in areas with heavy rainfall in India?", options:["Desert scrub","Tropical evergreen forest","Alpine forest","Thorn forest"], correct:1}
+],
+"computer": [
+{q:"What is the full form of 'RAM'?", options:["Random Access Memory","Read Access Memory","Random Active Memory","Read Active Module"], correct:0},
+{q:"Which number system is used internally by computers?", options:["Decimal","Binary","Octal","Roman"], correct:1},
+{q:"What does 'OS' stand for?", options:["Operating System","Output System","Operation Software","Online System"], correct:0},
+{q:"What is 'malware' short for?", options:["Malicious software","Main software","Manual software","Machine software"], correct:0},
+{q:"What does 'GUI' stand for?", options:["General User Interface","Graphical User Interface","Global User Index","Graphic Unit Interface"], correct:1}
+]
+},
+"10": {
+"math": [
+{q:"What is the value of sin(90\u00b0)?", options:["0","1","-1","0.5"], correct:1},
+{q:"The quadratic formula is used to solve which type of equation?", options:["Linear equations","Quadratic equations","Cubic equations","Exponential equations"], correct:1},
+{q:"An Arithmetic Progression (AP) is a sequence with what property?", options:["A common ratio between terms","A common difference between terms","Random terms","Only even terms"], correct:1},
+{q:"What is the value of \u03c0 (pi), approximately?", options:["2.14","3.14","4.14","1.14"], correct:1},
+{q:"The distance formula is used to find what?", options:["The area of a shape","The distance between two points","The angle between lines","The slope of a line"], correct:1}
+],
+"science": [
+{q:"What is the process by which plants lose water through their leaves called?", options:["Photosynthesis","Respiration","Transpiration","Germination"], correct:2},
+{q:"Which gas is released when a metal reacts with an acid?", options:["Oxygen gas","Hydrogen gas","Nitrogen gas","Carbon dioxide gas"], correct:1},
+{q:"What is the SI unit of electric current?", options:["Volt","Ohm","Ampere","Watt"], correct:2},
+{q:"Which scientist is credited with creating an early periodic table arranged by atomic mass?", options:["Isaac Newton","Dmitri Mendeleev","Charles Darwin","Niels Bohr"], correct:1},
+{q:"What is the main function of the retina in the human eye?", options:["Controls light entry","Forms the image","Protects the eye","Produces tears"], correct:1}
+],
+"english": [
+{q:"Choose the correct form: 'If I ___ rich, I would travel the world.'", options:["am","was","were","be"], correct:2},
+{q:"A 'formal letter' is typically used for what purpose?", options:["Casual chat with friends","Official or business communication","Writing a diary","Writing poetry"], correct:1},
+{q:"Identify the figure of speech: 'The wind whispered through the trees.'", options:["Simile","Personification","Metaphor","Hyperbole"], correct:1},
+{q:"What is an antonym of 'benevolent'?", options:["Kind","Generous","Unkind","Caring"], correct:2},
+{q:"What does a 'bibliography' refer to in an essay?", options:["The essay's title","A list of sources used","The introduction","The author's biography"], correct:1}
+],
+"history": [
+{q:"Who led India's Non-Cooperation Movement?", options:["Subhas Chandra Bose","Mahatma Gandhi","Bhagat Singh","Jawaharlal Nehru"], correct:1},
+{q:"In which year did the Non-Cooperation Movement begin?", options:["1915","1920","1930","1942"], correct:1},
+{q:"In which year was the Quit India Movement launched?", options:["1930","1935","1942","1947"], correct:2},
+{q:"The Salt March (Dandi March) was a protest against what?", options:["The British salt tax","Land revenue","Foreign cloth","Railway fares"], correct:0},
+{q:"The Salt March in 1930 is associated with which movement?", options:["Non-Cooperation Movement","Civil Disobedience Movement","Quit India Movement","Khilafat Movement"], correct:1}
+],
+"geography": [
+{q:"What is the term for the topmost layer of soil that supports plant growth?", options:["Bedrock","Topsoil","Subsoil","Silt"], correct:1},
+{q:"Which crop is known as the 'Golden Fibre' of India?", options:["Cotton","Jute","Silk","Wool"], correct:1},
+{q:"What is the term for the shift of population from rural to urban areas?", options:["Migration","Urbanisation","Colonisation","Deforestation"], correct:1},
+{q:"Which sector is considered a major source of employment in India in terms of workforce?", options:["Agriculture","Manufacturing","IT services","Mining"], correct:0},
+{q:"Roads, railways, and airways are collectively referred to as what in the Indian economy?", options:["Natural resources","Means of transportation","Manufacturing industries","Primary sector"], correct:1}
+],
+"computer": [
+{q:"What does 'HTML' stand for?", options:["HyperText Markup Language","High Text Markup Language","HyperText Machine Language","Home Tool Markup Language"], correct:0},
+{q:"What is a firewall used for?", options:["Speeding up the internet","Protecting a network from unauthorized access","Storing files","Printing documents"], correct:1},
+{q:"What is an algorithm?", options:["A type of virus","A step-by-step procedure to solve a problem","A computer part","An internet browser"], correct:1},
+{q:"What does 'CSS' stand for in web design?", options:["Cascading Style Sheets","Computer Style System","Creative Style Sheets","Coded Style System"], correct:0},
+{q:"What is 'phishing'?", options:["A type of computer game","A scam to trick people into revealing personal information","A programming language","A type of hardware"], correct:1}
+]
 }
 };
+
+function renderMockControls(){
+const area = document.getElementById('mockControlsArea');
+const testArea = document.getElementById('mockTestArea');
+testArea.innerHTML = '';
+const clsKey = String(currentClass);
+
+if(!mockTestData[clsKey]){
+area.innerHTML = '';
+const soon = document.createElement('div');
+soon.className = 'mock-soon';
+soon.innerHTML = '<p>Mock tests for Class ' + currentClass + ' are coming soon! We are starting with classes 6\u201310 and expanding from there.</p>';
+testArea.appendChild(soon);
+return;
+}
+
+area.innerHTML = '';
+const controls = document.createElement('div');
+controls.className = 'mock-controls';
+
+const subjectSelect = document.createElement('select');
+subjectSelect.id = 'mockSubject';
+const subjects = [
+{v:'math', l:'Math'}, {v:'science', l:'Science'}, {v:'english', l:'English'},
+{v:'history', l:'History'}, {v:'geography', l:'Geography'}, {v:'computer', l:'Computer Basics'}
+];
+subjects.forEach(s => {
+const opt = document.createElement('option');
+opt.value = s.v; opt.textContent = s.l;
+subjectSelect.appendChild(opt);
+});
+controls.appendChild(subjectSelect);
+
+const startBtn = document.createElement('button');
+startBtn.className = 'btn btn-solid';
+startBtn.textContent = 'Start Test';
+startBtn.onclick = loadMockTest;
+controls.appendChild(startBtn);
+
+area.appendChild(controls);
+const note = document.createElement('p');
+note.className = 'mock-note';
+note.textContent = 'Testing Class ' + currentClass + ' knowledge \u2014 5 quick questions.';
+area.appendChild(note);
+}
 
 function getBestKey(cls, subj){
 return 'lockerNotesBest_' + cls + '_' + subj;
@@ -915,7 +1084,7 @@ el.textContent = prefixText + finalScore + ' / ' + total + suffixText;
 }
 
 function loadMockTest(){
-const cls = document.getElementById('mockClass').value;
+const cls = String(currentClass);
 const subj = document.getElementById('mockSubject').value;
 const questions = mockTestData[cls][subj];
 const area = document.getElementById('mockTestArea');
@@ -1027,6 +1196,56 @@ suffixText = '';
 animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
+
+// ---------- Advice tiers ----------
+const adviceData = {
+elementary: {
+label: "Advice for Classes 1\u20135",
+notes: [
+{title:"On making mistakes", text:"Everyone makes mistakes while learning \u2014 that's how you get better. It's okay!"},
+{title:"On asking questions", text:"If you don't understand something, ask your teacher. They want to help you."},
+{title:"On sharing", text:"Sharing and taking turns makes playtime more fun for everyone."},
+{title:"On trying new things", text:"Feeling nervous about something new is normal \u2014 everyone feels that way at first."}
+]
+},
+middle: {
+label: "Advice for Classes 6\u201310",
+notes: [
+{title:"On failing a test", text:"One bad grade is data, not a verdict. Figure out what went wrong, fix that one thing, and move on."},
+{title:"On feeling behind", text:"Everyone's on a different timeline. Compare yourself to who you were last month, not to everyone else."},
+{title:"On friend drama", text:"Give it a day before reacting. Most things feel smaller after you've slept on them."},
+{title:"On procrastinating", text:"Don't aim to \"finish the assignment.\" Aim to work on it for 10 minutes. Starting is the hard part."},
+{title:"On asking for help", text:"Asking a question isn't admitting you're behind \u2014 it's how you stop being behind."},
+{title:"On comparing yourself to others", text:"Someone else's highlight reel isn't their everyday life. You're only ever seeing part of the story."}
+]
+},
+senior: {
+label: "Advice for Classes 11\u201312",
+notes: [
+{title:"On choosing a stream or career", text:"You don't have to have your whole future figured out right now. It's okay to explore."},
+{title:"On board exam pressure", text:"Your board exam score matters, but it doesn't define your worth or your future."},
+{title:"On comparing yourself to toppers", text:"Someone else's rank doesn't change your own progress. Focus on your own growth."},
+{title:"On managing stress", text:"Take real breaks, sleep enough, and talk to someone if it ever feels like too much."}
+]
+}
+};
+
+function renderAdvice(){
+const tier = getTier(currentClass);
+const data = adviceData[tier];
+document.getElementById('adviceTierLabel').textContent = data.label;
+const board = document.getElementById('adviceCorkboard');
+board.innerHTML = '';
+data.notes.forEach(n => {
+const div = document.createElement('div');
+div.className = 'note';
+div.innerHTML = '<strong>' + n.title + '</strong><p>' + n.text + '</p>';
+board.appendChild(div);
+});
+}
+
+renderMockControls();
+renderAdvice();
 
 // ---------- Quick Answers search ----------
 const qaData = [
