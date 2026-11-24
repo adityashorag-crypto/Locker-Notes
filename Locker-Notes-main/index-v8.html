@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locker Notes — Homework Help &amp; Advice, By an 8th Grader</title>
+<meta name="description" content="Free instant homework help and advice for students. Ask anything, get an answer right away — no sign-up needed.">
+
+<!-- Set dark mode before the page paints, to avoid a flash of the wrong theme -->
+<script>
+(function(){
+try{
+var t = localStorage.getItem('lockerNotesTheme');
+if(t === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
+}catch(e){}
+})();
+</script>
+
+<!-- Social preview (shows up when you share the link on WhatsApp, Instagram, X, etc.) -->
+<meta property="og:title" content="Locker Notes — Free Homework Help & Advice">
+<meta property="og:description" content="Free instant homework help and advice for students, built by an 8th grader. Ask anything, get an answer right away.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adityashorag-crypto.github.io/Locker-Notes/">
+<meta property="og:image" content="https://adityashorag-crypto.github.io/Locker-Notes/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Locker Notes — Free Homework Help & Advice">
+<meta name="twitter:description" content="Free instant homework help and advice for students. Ask anything, get an answer right away.">
+<meta name="twitter:image" content="https://adityashorag-crypto.github.io/Locker-Notes/og-image.png">
+
+<!-- Favicon (a little yellow "L" tab, no separate image file needed) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23FFD23F'/><text x='32' y='45' font-family='monospace' font-weight='800' font-size='36' fill='%231C2B3A' text-anchor='middle'>L</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ec86fbf6aa5c4fb08f10c71c2e8cd34a"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+<style>
+:root{
+--paper:#F2F6EC;
+--paper-line:#DCE8D0;
+--panel:#FFFFFF;
+--ink:#1C2B3A;
+--ink-soft:#51616F;
+--dark-navy:#1C2B3A;
+--cream:#F2F6EC;
+--highlighter:#FFD23F;
+--blue:#3E8EDE;
+--green:#4CAF7D;
+--coral:#E8543E;
+--mustard:#CE9A25;
+--purple:#8B6FCE;
+--radius:14px;
+--shadow:0 6px 18px rgba(28,43,58,0.08);
+--mono:'JetBrains Mono', ui-monospace, monospace;
+--sans:'Inter', system-ui, sans-serif;
+}
+:root[data-theme="dark"]{
+--paper:#121A22;
+--paper-line:#232F3A;
+--panel:#1B2530;
+--ink:#E8EEF2;
+--ink-soft:#9FB0BD;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+html{scroll-behavior:auto;}
+*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+body{
+margin:0;
+background:
+linear-gradient(var(--paper-line) 1px, transparent 1px),
+radial-gradient(circle at 8% 10%, rgba(62,142,222,0.14), transparent 32%),
+radial-gradient(circle at 92% 16%, rgba(139,111,206,0.15), transparent 32%),
+radial-gradient(circle at 12% 88%, rgba(76,175,125,0.13), transparent 32%),
+radial-gradient(circle at 88% 82%, rgba(232,84,62,0.12), transparent 32%),
+radial-gradient(circle at 50% 50%, rgba(206,154,37,0.08), transparent 45%);
+background-size: 100% 32px, cover, cover, cover, cover, cover;
+background-attachment: scroll, fixed, fixed, fixed, fixed, fixed;
+background-color:var(--paper);
+color:var(--ink);
+font-family:var(--sans);
+line-height:1.5;
+-webkit-font-smoothing:antialiased;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+a{color:var(--blue);}
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+outline:3px solid var(--blue);
+outline-offset:2px;
+border-radius:4px;
+}
+.wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+/* ---------- Header : spiral notebook edge ---------- */
+header{
+background:var(--dark-navy);
+color:var(--cream);
+padding-top:22px;
+position:relative;
+}
+.spiral{
+height:26px;
+background-image: radial-gradient(circle 6px, var(--cream) 5px, transparent 5.5px);
+background-size:34px 26px;
+background-position: 17px center;
+background-repeat:repeat-x;
+background-color:var(--dark-navy);
+}
+.thread{
+height:4px;
+background:linear-gradient(90deg, var(--blue), var(--green), var(--mustard), var(--coral), var(--purple));
+}
+.header-inner{
+display:flex; align-items:center; justify-content:space-between;
+padding:18px 24px 26px;
+max-width:920px; margin:0 auto;
+flex-wrap:wrap; gap:12px;
+}
+.brand{
+display:flex; align-items:baseline; gap:10px;
+}
+.brand-tab{
+font-family:var(--mono); font-weight:800; font-size:1.15rem;
+background:var(--highlighter); color:var(--dark-navy);
+padding:6px 12px; border-radius:6px;
+transform:rotate(-2deg);
+box-shadow:var(--shadow);
+}
+.brand-sub{ font-family:var(--mono); font-size:0.75rem; color:#B9C6CF; letter-spacing:0.04em;}
+nav{display:flex; gap:18px; font-family:var(--mono); font-size:0.82rem; flex-wrap:wrap;}
+nav a{color:var(--cream); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color 0.2s ease, color 0.2s ease;}
+nav a:hover{border-bottom-color:var(--highlighter);}
+.theme-toggle{
+background:transparent; border:2px solid rgba(242,246,236,0.35); border-radius:8px;
+color:var(--cream); font-size:1rem; padding:6px 10px; cursor:pointer; line-height:1;
+transition:background 0.2s ease, transform 0.15s ease;
+}
+.theme-toggle:hover{background:rgba(242,246,236,0.12);}
+.theme-toggle:active{transform:scale(0.92);}
+
+/* ---------- Hero ---------- */
+.hero{padding:64px 0 48px; position:relative; overflow:hidden;}
+.hero::before{
+content:"";
+position:absolute; top:-60px; right:-40px; width:220px; height:220px;
+background:radial-gradient(circle, rgba(139,111,206,0.16), transparent 70%);
+z-index:0; pointer-events:none;
+}
+.hero::after{
+content:"";
+position:absolute; bottom:-40px; left:-60px; width:200px; height:200px;
+background:radial-gradient(circle, rgba(76,175,125,0.14), transparent 70%);
+z-index:0; pointer-events:none;
+}
+.hero > *{position:relative; z-index:1;}
+.hero-confetti{position:absolute; inset:0; overflow:hidden; pointer-events:none;}
+.confetti{position:absolute; border-radius:50%; opacity:0.8;}
+.confetti.c1{width:14px; height:14px; background:var(--coral); top:14%; right:12%;}
+.confetti.c2{width:10px; height:10px; background:var(--green); top:58%; right:6%;}
+.confetti.c3{width:12px; height:12px; background:var(--mustard); top:78%; right:22%;}
+.confetti.c4{width:9px; height:9px; background:var(--purple); top:30%; right:2%;}
+.confetti.c5{width:11px; height:11px; background:var(--blue); top:4%; right:26%;}
+.eyebrow{
+font-family:var(--mono); font-size:0.8rem; color:var(--blue);
+letter-spacing:0.08em; text-transform:uppercase; margin:0 0 14px; font-weight:700;
+}
+h1{
+font-family:var(--mono); font-weight:800;
+font-size:clamp(2rem, 5vw, 3.2rem);
+line-height:1.08; margin:0 0 18px; letter-spacing:-0.01em;
+}
+h1 .hl{
+background-image: linear-gradient(transparent 62%, var(--highlighter) 62%);
+background-repeat: no-repeat;
+background-size: 0% 100%;
+color: var(--dark-navy);
+animation: highlightSweep 0.7s ease-out 0.3s forwards;
+padding: 0 2px;
+}
+@keyframes highlightSweep{
+to { background-size: 100% 100%; }
+}
+.hero p{
+font-size:1.08rem; color:var(--ink-soft); max-width:52ch; margin:0 0 28px;
+}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{
+font-family:var(--mono); font-weight:700; font-size:0.9rem;
+padding:13px 22px; border-radius:8px; text-decoration:none;
+border:2px solid var(--ink); cursor:pointer; display:inline-block;
+transition:transform 0.15s ease, filter 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn-solid{background:linear-gradient(120deg, var(--blue), var(--purple)); color:#fff; border-color:transparent;}
+.btn-solid:hover{filter:brightness(1.08); transform:translateY(-1px);}
+.btn-solid:active{transform:scale(0.97);}
+.btn-ghost{background:transparent; color:var(--ink);}
+.btn-ghost:hover{background:rgba(62,142,222,0.08); border-color:var(--blue); color:var(--blue);}
+.btn-ghost:active{transform:scale(0.97);}
+section{padding:52px 0;}
+.section-head{margin-bottom:28px; max-width:60ch;}
+.section-head h2{
+font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 8px;
+}
+.section-head p{color:var(--ink-soft); margin:0;}
+#quick .section-head h2{color:var(--blue);}
+#help .section-head h2{color:var(--green);}
+#mocktest .section-head h2{color:var(--green);}
+#ask .section-head h2{color:var(--coral);}
+#advice .section-head h2{color:var(--purple);}
+#share .section-head h2{color:var(--mustard);}
+
+/* ---------- Scroll-reveal ---------- */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease;}
+.reveal.in-view{opacity:1; transform:translateY(0);}
+
+/* ---------- Quick Answers ---------- */
+.search-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px 26px 22px;
+border-top:4px solid var(--blue);
+}
+.search-input{
+width:100%; font-family:var(--sans); font-size:1.05rem;
+padding:14px 16px; border-radius:10px; border:2px solid var(--paper-line);
+background:var(--paper); color:var(--ink);
+}
+.search-input:focus{border-color:var(--blue); outline:none;}
+.search-hint{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 0;}
+.search-trust{font-family:var(--mono); font-size:0.78rem; color:var(--green); margin:4px 0 0; font-weight:700;}
+.qa-results{display:grid; gap:16px; margin-top:20px;}
+.qa-item{border-left:4px solid var(--blue); padding:8px 12px 8px 16px; border-radius:0 8px 8px 0;}
+.qa-item[data-tag="math"]{border-color:var(--blue); background:rgba(62,142,222,0.05);}
+.qa-item[data-tag="sci"]{border-color:var(--green); background:rgba(76,175,125,0.06);}
+.qa-item[data-tag="eng"]{border-color:var(--coral); background:rgba(232,84,62,0.05);}
+.qa-item[data-tag="hist"]{border-color:var(--mustard); background:rgba(206,154,37,0.06);}
+.qa-item[data-tag="life"]{border-color:var(--purple); background:rgba(139,111,206,0.06);}
+.qa-item .q{font-family:var(--mono); font-weight:700; font-size:0.95rem; margin:0 0 4px;}
+.qa-item .a{margin:0; color:var(--ink-soft); font-size:0.95rem;}
+.qa-empty{font-size:0.95rem; color:var(--ink-soft); padding:8px 4px;}
+.qa-empty a{color:var(--blue); font-weight:600;}
+
+/* ---------- Binder tabs (Homework Help) ---------- */
+.tabbar{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:0;}
+.tab-btn{
+font-family:var(--mono); font-weight:700; font-size:0.85rem;
+padding:12px 18px 10px; border:none; cursor:pointer;
+border-radius:10px 10px 0 0;
+background:#E4EADB; color:var(--ink-soft);
+position:relative; top:2px;
+transition:color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+:root[data-theme="dark"] .tab-btn{background:#232F3A;}
+.tab-btn:active{transform:scale(0.96);}
+.tab-btn[aria-selected="true"]{
+background:var(--panel); color:var(--ink);
+box-shadow:0 -2px 8px rgba(28,43,58,0.06);
+}
+.tab-btn[data-c="math"][aria-selected="true"]{border-top:4px solid var(--blue);}
+.tab-btn[data-c="sci"][aria-selected="true"]{border-top:4px solid var(--green);}
+.tab-btn[data-c="eng"][aria-selected="true"]{border-top:4px solid var(--coral);}
+.tab-btn[data-c="hist"][aria-selected="true"]{border-top:4px solid var(--mustard);}
+.tab-btn[data-c="math"]:hover{color:var(--blue);}
+.tab-btn[data-c="sci"]:hover{color:var(--green);}
+.tab-btn[data-c="eng"]:hover{color:var(--coral);}
+.tab-btn[data-c="hist"]:hover{color:var(--mustard);}
+.panel-wrap{
+background:var(--panel); border-radius:0 12px 12px 12px;
+box-shadow:var(--shadow); padding:28px 26px;
+}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel h3{font-family:var(--mono); font-size:1.05rem; margin:0 0 4px;}
+.panel .sub{color:var(--ink-soft); font-size:0.9rem; margin:0 0 18px;}
+.tip-list{list-style:none; margin:0; padding:0; display:grid; gap:14px;}
+.tip-list li{
+padding-left:30px; position:relative; font-size:0.98rem;
+}
+.tip-list li::before{
+content:"→"; position:absolute; left:0; font-family:var(--mono); font-weight:700; color:var(--blue);
+}
+.panel[data-p="sci"] .tip-list li::before{color:var(--green);}
+.panel[data-p="eng"] .tip-list li::before{color:var(--coral);}
+.panel[data-p="hist"] .tip-list li::before{color:var(--mustard);}
+.tip-list strong{display:block; font-family:var(--mono); font-size:0.92rem; margin-bottom:2px;}
+
+/* ---------- Mock Tests ---------- */
+.mock-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px;
+border-top:4px solid var(--green);
+}
+.mock-controls{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+.mock-controls select{
+font-family:var(--sans); font-size:1rem; padding:10px 14px; border-radius:8px;
+border:2px solid var(--paper-line); background:var(--paper); color:var(--ink);
+}
+.mock-controls select:focus{border-color:var(--green); outline:none;}
+.mock-note{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 18px;}
+.mock-best-info{font-family:var(--mono); font-size:0.85rem; color:var(--ink-soft); margin:0 0 12px;}
+.mock-progress-track{width:100%; height:8px; background:var(--paper-line); border-radius:4px; overflow:hidden; margin-bottom:18px;}
+.mock-progress-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--green), var(--blue)); transition:width 0.3s ease;}
+.mock-result{
+font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--green);
+margin-bottom:16px; display:none; padding:12px 16px; background:rgba(76,175,125,0.1); border-radius:8px;
+}
+.mock-result.visible{display:block;}
+.mock-result.perfect{
+background:rgba(255,210,63,0.3); color:var(--dark-navy); border:2px solid var(--highlighter);
+animation:perfectPulse 0.5s ease;
+}
+@keyframes perfectPulse{
+0%{transform:scale(0.94);}
+60%{transform:scale(1.04);}
+100%{transform:scale(1);}
+}
+.mock-question{
+background:var(--paper); border-radius:10px; padding:16px 18px; margin-bottom:14px;
+border-left:4px solid var(--green);
+}
+.mock-q-text{font-family:var(--mono); font-weight:700; font-size:0.92rem; margin:0 0 10px;}
+.mock-option{
+display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px;
+margin-bottom:4px; cursor:pointer; font-size:0.95rem;
+}
+.mock-option:hover{background:rgba(76,175,125,0.08);}
+.mock-option.correct{background:rgba(76,175,125,0.22); font-weight:700;}
+.mock-option.incorrect{background:rgba(232,84,62,0.18); text-decoration:line-through;}
+
+/* ---------- Confetti celebration ---------- */
+.confetti-piece{
+position:fixed; top:-20px; width:9px; height:14px; opacity:0.95;
+z-index:999; pointer-events:none; border-radius:2px;
+animation-name:confettiFall; animation-timing-function:ease-in; animation-fill-mode:forwards;
+}
+@keyframes confettiFall{
+0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+100%{ transform:translateY(100vh) rotate(560deg); opacity:0; }
+}
+
+/* ---------- Ask Anything ---------- */
+.ask-wrap{
+background:var(--panel); border-radius:var(--radius);
+box-shadow:var(--shadow); padding:26px;
+border-top:4px solid var(--coral);
+}
+#questionInput{
+width:100%; font-family:var(--sans); font-size:1.05rem;
+padding:14px 16px; border-radius:10px; border:2px solid var(--paper-line);
+background:var(--paper); color:var(--ink); resize:vertical; min-height:100px;
+}
+#questionInput:focus{border-color:var(--coral); outline:none;}
+.ask-wrap .btn{margin-top:14px;}
+.ask-note{font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); margin:10px 0 0;}
+.answer-box{
+margin-top:20px; padding:16px 18px; border-radius:10px;
+background:var(--paper); border-left:4px solid var(--coral);
+font-size:0.98rem; color:var(--ink);
+display:none;
+}
+.answer-box.visible{display:block;}
+.answer-box.loading{color:var(--ink-soft); font-style:italic;}
+.answer-box.error{border-left-color:#B23A28; color:#B23A28;}
+.answer-main{white-space:pre-wrap;}
+.flow-chart{display:flex; flex-direction:column; gap:6px; margin-top:16px; align-items:flex-start;}
+.flow-step{
+background:#fff; border-left:4px solid var(--coral); border-radius:0 8px 8px 0;
+padding:10px 14px; font-family:var(--mono); font-size:0.85rem; color:var(--ink);
+box-shadow:var(--shadow); max-width:100%;
+}
+:root[data-theme="dark"] .flow-step{background:var(--panel);}
+.flow-arrow{font-family:var(--mono); font-weight:700; color:var(--coral); font-size:1rem; padding-left:14px;}
+
+/* ---------- Advice corkboard ---------- */
+.corkboard{
+background:#DCC9A3;
+border-radius:var(--radius);
+padding:34px 28px;
+display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+gap:22px;
+box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+}
+.note{
+background:var(--highlighter); padding:18px 18px 20px; border-radius:2px;
+box-shadow:0 8px 14px rgba(0,0,0,0.16);
+font-size:0.92rem;
+transition:transform 0.15s ease, box-shadow 0.15s ease;
+position:relative;
+color:var(--dark-navy);
+}
+.note::before{
+content:"";
+position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+width:14px; height:14px; border-radius:50%;
+background:radial-gradient(circle at 35% 35%, #fff, var(--coral) 55%, #7a2418 100%);
+box-shadow:0 2px 3px rgba(0,0,0,0.35);
+}
+.note:nth-child(1){transform:rotate(-2.5deg); background:var(--highlighter);}
+.note:nth-child(2){transform:rotate(1.5deg); background:#B7E4C7;}
+.note:nth-child(3){transform:rotate(-1.2deg); background:#AFD4F2;}
+.note:nth-child(4){transform:rotate(2.4deg); background:#F3B8B0;}
+.note:nth-child(5){transform:rotate(-2deg); background:#E3D2F5;}
+.note:nth-child(6){transform:rotate(1.8deg); background:#F5E1B8;}
+.note:nth-child(1):hover{transform:rotate(-2.5deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(2):hover{transform:rotate(1.5deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(3):hover{transform:rotate(-1.2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(4):hover{transform:rotate(2.4deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(5):hover{transform:rotate(-2deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note:nth-child(6):hover{transform:rotate(1.8deg) scale(1.04); box-shadow:0 12px 20px rgba(0,0,0,0.22); z-index:2;}
+.note p{margin:0;}
+.note strong{display:block; font-family:var(--mono); font-size:0.8rem; margin-bottom:6px; color:#51616F;}
+
+/* ---------- Share section ---------- */
+.share-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+.copy-feedback{font-family:var(--mono); font-size:0.78rem; color:var(--green); font-weight:700;}
+
+/* ---------- Footer ---------- */
+footer{
+background:var(--dark-navy); color:#B9C6CF; padding:36px 24px 28px;
+margin-top:24px; text-align:center;
+}
+footer p{font-family:var(--mono); font-size:0.8rem; margin:0 0 6px;}
+footer a{color:var(--highlighter); text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:640px){
+.header-inner{flex-direction:column; align-items:flex-start;}
+nav{gap:12px; flex-wrap:wrap; font-size:0.76rem;}
+.hero{padding:44px 0 32px;}
+.corkboard{padding:24px 18px;}
+.panel-wrap{padding:22px 18px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="spiral"></div>
+<div class="thread"></div>
+<div class="header-inner">
+<div class="brand">
+<span class="brand-tab">Locker Notes</span>
+<span class="brand-sub">homework help &amp; advice</span>
+</div>
+<nav>
+<a href="#quick">Quick Answers</a>
+<a href="#help">Homework Help</a>
+<a href="#mocktest">Mock Tests</a>
+<a href="#ask">Ask Anything</a>
+<a href="#advice">Advice</a>
+</nav>
+<button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+</div>
+</header>
+
+<main class="wrap">
+
+<section class="hero">
+<div class="hero-confetti">
+<span class="confetti c1"></span>
+<span class="confetti c2"></span>
+<span class="confetti c3"></span>
+<span class="confetti c4"></span>
+<span class="confetti c5"></span>
+</div>
+<p class="eyebrow">Free · Instant · No sign-up</p>
+<h1>Stuck on homework? <span class="hl">Or just need advice?</span></h1>
+<p>Locker Notes is a free spot for students to get instant help — homework questions, study tips, or anything else you're not sure who to ask. Built by an 8th grader, for students like you.</p>
+<div class="cta-row">
+<button class="btn btn-solid" onclick="goToAsk()">Ask a question</button>
+<a href="#help" class="btn btn-ghost">Browse homework help</a>
+</div>
+</section>
+
+<section id="quick">
+<div class="section-head">
+<h2>🔍 Quick Answers</h2>
+<p>Type a keyword and see if we've already got you covered.</p>
+</div>
+<div class="search-wrap reveal">
+<input type="text" class="search-input" id="quickSearch" placeholder="Try 'fractions', 'photosynthesis', 'essay intro'...">
+<p class="search-hint">Matches update as you type.</p>
+<p class="search-trust">✓ 100% free, no account needed</p>
+<div class="qa-results" id="qaResults"></div>
+</div>
+</section>
+
+<section id="help">
+<div class="section-head">
+<h2>📚 Homework Help</h2>
+<p>Pick a subject for quick strategies, or head to Ask Anything for something specific.</p>
+</div>
+<div class="tabbar" role="tablist">
+<button class="tab-btn" data-c="math" aria-selected="true">Math</button>
+<button class="tab-btn" data-c="sci" aria-selected="false">Science</button>
+<button class="tab-btn" data-c="eng" aria-selected="false">English</button>
+<button class="tab-btn" data-c="hist" aria-selected="false">History</button>
+</div>
+<div class="panel-wrap reveal">
+<div class="panel active" data-p="math">
+<h3>Math</h3>
+<p class="sub">Quick strategies before you Google the answer.</p>
+<ul class="tip-list">
+<li><strong>Show every step.</strong> Even if you know the answer, writing out your steps catches mistakes and earns partial credit.</li>
+<li><strong>Check with estimation.</strong> Round the numbers first — if your exact answer is way off from your estimate, recheck your work.</li>
+<li><strong>Redo it from scratch once.</strong> If you got a problem wrong, don't just find the error — solve the whole thing again fresh.</li>
+<li><strong>Learn from mistakes.</strong> Keep a short list of errors you keep repeating — reviewing it before a test catches them before they cost you points.</li>
+</ul>
+</div>
+<div class="panel" data-p="sci">
+<h3>Science</h3>
+<p class="sub">Understand it, don't just memorize it.</p>
+<ul class="tip-list">
+<li><strong>Explain it out loud.</strong> If you can explain a concept simply to a friend, you actually understand it.</li>
+<li><strong>Draw the process.</strong> Diagrams for things like cycles or systems stick better than paragraphs.</li>
+<li><strong>Connect it to real life.</strong> Link the concept to something you've actually seen happen.</li>
+<li><strong>Use flashcards for vocab.</strong> Science is full of specific terms — quick flashcard reviews make definitions stick faster than re-reading notes.</li>
+</ul>
+</div>
+<div class="panel" data-p="eng">
+<h3>English</h3>
+<p class="sub">Writing and reading, made less painful.</p>
+<ul class="tip-list">
+<li><strong>Outline before you write.</strong> Three bullet points for your main ideas saves you from staring at a blank page.</li>
+<li><strong>Read it out loud.</strong> Awkward sentences almost always sound wrong when spoken.</li>
+<li><strong>Cut ruthlessly.</strong> If a sentence doesn't add anything new, delete it.</li>
+<li><strong>Vary your sentence length.</strong> Mixing short and long sentences keeps writing from feeling monotonous.</li>
+</ul>
+</div>
+<div class="panel" data-p="hist">
+<h3>History</h3>
+<p class="sub">Dates and causes, actually remembered.</p>
+<ul class="tip-list">
+<li><strong>Build a timeline.</strong> Seeing events in order makes cause-and-effect click.</li>
+<li><strong>Ask "why," not just "what."</strong> Teachers usually care more about why something happened than the exact date.</li>
+<li><strong>Turn it into a story.</strong> People remember stories better than fact lists.</li>
+<li><strong>Compare, don't just list.</strong> Compare causes and effects across events instead of listing facts — it shows deeper understanding.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="mocktest">
+<div class="section-head">
+<h2>📝 Mock Tests</h2>
+<p>Pick your class and subject, then test yourself with a quick 5-question quiz.</p>
+</div>
+<div class="mock-wrap reveal">
+<div class="mock-controls">
+<select id="mockClass">
+<option value="6">Class 6</option>
+<option value="7">Class 7</option>
+<option value="8">Class 8</option>
+</select>
+<select id="mockSubject">
+<option value="math">Math</option>
+<option value="science">Science</option>
+<option value="english">English</option>
+<option value="history">History</option>
+<option value="geography">Geography</option>
+<option value="computer">Computer Basics</option>
+</select>
+<button class="btn btn-solid" onclick="loadMockTest()">Start Test</button>
+</div>
+<p class="mock-note">More classes and subjects coming soon — this is just the start!</p>
+<div id="mockTestArea"></div>
+</div>
+</section>
+
+<section id="ask">
+<div class="section-head">
+<h2>💬 Ask Anything</h2>
+<p>Homework question or just need advice? Type it below and get an instant answer.</p>
+</div>
+<div class="ask-wrap reveal">
+<textarea id="questionInput" rows="4" placeholder="What's your question?"></textarea>
+<button class="btn btn-solid" id="askBtn" onclick="askQuestion()">Get an answer</button>
+<p class="ask-note">Answers are generated instantly and might not always be perfect — always double check anything important.</p>
+<div class="answer-box" id="answerBox"></div>
+</div>
+</section>
+
+<section id="advice">
+<div class="section-head">
+<h2>📌 Advice Corkboard</h2>
+<p>A few things worth pinning up.</p>
+</div>
+<div class="corkboard reveal">
+<div class="note">
+<strong>On failing a test</strong>
+<p>One bad grade is data, not a verdict. Figure out what went wrong, fix that one thing, and move on.</p>
+</div>
+<div class="note">
+<strong>On feeling behind</strong>
+<p>Everyone's on a different timeline. Compare yourself to who you were last month, not to everyone else.</p>
+</div>
+<div class="note">
+<strong>On friend drama</strong>
+<p>Give it a day before reacting. Most things feel smaller after you've slept on them.</p>
+</div>
+<div class="note">
+<strong>On procrastinating</strong>
+<p>Don't aim to "finish the assignment." Aim to work on it for 10 minutes. Starting is the hard part.</p>
+</div>
+<div class="note">
+<strong>On asking for help</strong>
+<p>Asking a question isn't admitting you're behind — it's how you stop being behind.</p>
+</div>
+<div class="note">
+<strong>On comparing yourself to others</strong>
+<p>Someone else's highlight reel isn't their everyday life. You're only ever seeing part of the story.</p>
+</div>
+</div>
+</section>
+
+<section id="share">
+<div class="section-head">
+<h2>📣 Share Locker Notes</h2>
+<p>Know someone who could use free instant homework help?</p>
+</div>
+<div class="share-row reveal">
+<a class="btn btn-solid" target="_blank" rel="noopener" href="https://wa.me/?text=Check%20out%20Locker%20Notes%20%E2%80%94%20free%20instant%20homework%20help%20and%20advice%3A%20https%3A%2F%2Fadityashorag-crypto.github.io%2FLocker-Notes%2F">Share on WhatsApp</a>
+<a class="btn btn-ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=Check%20out%20Locker%20Notes%20%E2%80%94%20free%20instant%20homework%20help%20and%20advice%3A%20https%3A%2F%2Fadityashorag-crypto.github.io%2FLocker-Notes%2F">Share on X</a>
+<button class="btn btn-ghost" id="copyBtn" onclick="copyLink()">Copy link</button>
+<span class="copy-feedback" id="copyFeedback"></span>
+</div>
+</section>
+
+</main>
+
+<footer>
+<p>Locker Notes — built by a student, for students.</p>
+<p>Questions or feedback? <a href="mailto:adityashorag@gmail.com">adityashorag@gmail.com</a></p>
+</footer>
+
+<script>
+// ---------- Dark mode ----------
+function toggleTheme(){
+const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+const next = current === 'dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme', next);
+const btn = document.getElementById('themeToggleBtn');
+if(btn) btn.textContent = next === 'dark' ? '☀️' : '🌙';
+try{ localStorage.setItem('lockerNotesTheme', next); }catch(e){}
+}
+(function initThemeIcon(){
+const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+const btn = document.getElementById('themeToggleBtn');
+if(btn) btn.textContent = current === 'dark' ? '☀️' : '🌙';
+})();
+
+// ---------- Homework Help tab switching ----------
+const tabButtons = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+tabButtons.forEach(b => b.setAttribute('aria-selected', 'false'));
+panels.forEach(p => p.classList.remove('active'));
+btn.setAttribute('aria-selected', 'true');
+document.querySelector('.panel[data-p="' + btn.dataset.c + '"]').classList.add('active');
+});
+});
+
+// ---------- Scroll-reveal animation ----------
+const revealEls = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+const io = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if(entry.isIntersecting){
+entry.target.classList.add('in-view');
+io.unobserve(entry.target);
+}
+});
+}, {threshold: 0.15});
+revealEls.forEach(el => io.observe(el));
+} else {
+revealEls.forEach(el => el.classList.add('in-view'));
+}
+
+// ---------- Jump to Ask Anything + auto-focus ----------
+function goToAsk(){
+document.getElementById('ask').scrollIntoView({behavior:'smooth'});
+setTimeout(() => {
+document.getElementById('questionInput').focus();
+}, 450);
+}
+
+// ---------- Confetti celebration ----------
+function celebrate(){
+const colors = ['#3E8EDE','#4CAF7D','#CE9A25','#E8543E','#8B6FCE','#FFD23F'];
+for(let i = 0; i < 60; i++){
+const piece = document.createElement('div');
+piece.className = 'confetti-piece';
+piece.style.left = (Math.random() * 100) + 'vw';
+piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+const duration = (1.8 + Math.random() * 1.2);
+piece.style.animationDuration = duration + 's';
+piece.style.animationDelay = (Math.random() * 0.4) + 's';
+document.body.appendChild(piece);
+setTimeout(() => piece.remove(), (duration + 0.6) * 1000);
+}
+}
+
+// ---------- Mock Tests ----------
+const mockTestData = {
+"6": {
+"math": [
+{q:"What is the smallest whole number?", options:["1","0","-1","10"], correct:1},
+{q:"Which of these is a prime number?", options:["4","6","9","7"], correct:3},
+{q:"What is 3/4 as a decimal?", options:["0.34","0.75","0.43","3.4"], correct:1},
+{q:"How many sides does a hexagon have?", options:["5","6","7","8"], correct:1},
+{q:"What is the LCM of 4 and 6?", options:["10","12","24","6"], correct:1}
+],
+"science": [
+{q:"Which of these is a herbivore?", options:["Lion","Cow","Tiger","Wolf"], correct:1},
+{q:"Which gas do plants absorb from air to make their own food?", options:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], correct:2},
+{q:"Which of these materials is a good conductor of electricity?", options:["Wood","Plastic","Copper","Rubber"], correct:2},
+{q:"What is the process of separating solid particles from a liquid using a cloth called?", options:["Evaporation","Filtration","Condensation","Freezing"], correct:1},
+{q:"Which of these does NOT produce its own light?", options:["Sun","Candle","Bulb","Moon"], correct:3}
+],
+"english": [
+{q:"Which word is a noun in this sentence: The dog ran fast?", options:["ran","fast","dog","the"], correct:2},
+{q:"What is the plural of 'child'?", options:["childs","childes","children","child's"], correct:2},
+{q:"Choose the correct verb: 'She ___ to school every day.'", options:["go","goes","going","gone"], correct:1},
+{q:"Which of these is an adjective?", options:["quickly","beautiful","run","house"], correct:1},
+{q:"What is the opposite (antonym) of 'happy'?", options:["joyful","glad","sad","excited"], correct:2}
+],
+"history": [
+{q:"Which ancient civilization built the cities of Harappa and Mohenjodaro?", options:["Roman","Indus Valley","Egyptian","Greek"], correct:1},
+{q:"Who was the founder of Buddhism?", options:["Mahavira","Ashoka","Gautama Buddha","Chandragupta"], correct:2},
+{q:"What were the earliest humans mainly dependent on for food?", options:["Farming","Hunting and gathering","Trading","Fishing only"], correct:1},
+{q:"The Harappan civilization is associated with which river?", options:["Ganga","Indus","Yamuna","Godavari"], correct:1},
+{q:"Ashoka belonged to which dynasty?", options:["Gupta","Maurya","Mughal","Chola"], correct:1}
+],
+"geography": [
+{q:"Which planet is known as the 'Red Planet'?", options:["Venus","Jupiter","Mars","Saturn"], correct:2},
+{q:"What is the imaginary line dividing the Earth into Northern and Southern Hemispheres called?", options:["Prime Meridian","Equator","Tropic of Cancer","Axis"], correct:1},
+{q:"How long does the Earth take to complete one rotation on its axis?", options:["12 hours","24 hours","365 days","30 days"], correct:1},
+{q:"Which is the largest continent?", options:["Africa","Asia","Europe","Australia"], correct:1},
+{q:"Lines of latitude are also known as?", options:["Meridians","Parallels","Longitudes","Tropics"], correct:1}
+],
+"computer": [
+{q:"Which of these is an input device?", options:["Monitor","Printer","Keyboard","Speaker"], correct:2},
+{q:"What does CPU stand for?", options:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Central Processor Utility"], correct:0},
+{q:"Which of these is an output device?", options:["Mouse","Keyboard","Monitor","Scanner"], correct:2},
+{q:"What is the 'brain' of the computer called?", options:["Monitor","CPU","Keyboard","Mouse"], correct:1},
+{q:"Which of these is used to save your work permanently?", options:["RAM","Hard Disk","Monitor","Keyboard"], correct:1}
+]
+},
+"7": {
+"math": [
+{q:"What is (-5) + 8?", options:["-13","3","13","-3"], correct:1},
+{q:"What is 25% of 200?", options:["25","40","50","75"], correct:2},
+{q:"Solve: x + 5 = 12. What is x?", options:["5","6","7","17"], correct:2},
+{q:"What is the sum of angles in a triangle?", options:["90 degrees","180 degrees","270 degrees","360 degrees"], correct:1},
+{q:"What is (-3) × (-4)?", options:["-12","12","-7","7"], correct:1}
+],
+"science": [
+{q:"What is the process by which green plants make their own food called?", options:["Respiration","Photosynthesis","Digestion","Transpiration"], correct:1},
+{q:"Which gas do we breathe in during respiration?", options:["Carbon dioxide","Nitrogen","Oxygen","Hydrogen"], correct:2},
+{q:"Litmus paper turns red in the presence of?", options:["A base","Water","An acid","Salt"], correct:2},
+{q:"What is the SI unit of time?", options:["Minute","Hour","Second","Day"], correct:2},
+{q:"Which of these is a natural fibre?", options:["Nylon","Polyester","Cotton","Rayon"], correct:2}
+],
+"english": [
+{q:"Choose the correct preposition: 'The book is ___ the table.'", options:["in","on","at","under"], correct:1},
+{q:"What is the past tense of 'go'?", options:["goed","went","gone","going"], correct:1},
+{q:"Which of these is a conjunction?", options:["quickly","and","beautiful","run"], correct:1},
+{q:"Identify the pronoun: '___ is my best friend.'", options:["Ravi","She","Happy","Quickly"], correct:1},
+{q:"What is a synonym of 'happy'?", options:["sad","joyful","angry","tired"], correct:1}
+],
+"history": [
+{q:"Who founded the Mughal Empire in India?", options:["Akbar","Humayun","Babur","Shah Jahan"], correct:2},
+{q:"The Delhi Sultanate was ruled by how many major dynasties?", options:["3","4","5","6"], correct:2},
+{q:"Which Mughal emperor built the Taj Mahal?", options:["Akbar","Jahangir","Shah Jahan","Aurangzeb"], correct:2},
+{q:"Akbar was the grandson of which Mughal emperor?", options:["Humayun","Babur","Shah Jahan","Jahangir"], correct:1},
+{q:"What does the term 'Sultan' generally mean?", options:["Farmer","Priest","King/ruler","Soldier"], correct:2}
+],
+"geography": [
+{q:"What are the three layers of the Earth called (outer to inner)?", options:["Crust, Mantle, Core","Soil, Rock, Magma","Surface, Middle, Center","Land, Sea, Sky"], correct:0},
+{q:"Which natural process mainly causes earthquakes?", options:["Rainfall","Movement of tectonic plates","Wind","Ocean currents"], correct:1},
+{q:"What is the layer of gases surrounding the Earth called?", options:["Atmosphere","Biosphere","Lithosphere","Hydrosphere"], correct:0},
+{q:"Which of these is a renewable resource?", options:["Coal","Petroleum","Wind","Natural gas"], correct:2},
+{q:"What do we call the permanent shifting of people from one place to another?", options:["Migration","Population","Settlement","Urbanisation"], correct:0}
+],
+"computer": [
+{q:"Which of these is system software?", options:["MS Word","Windows OS","Photoshop","Chrome"], correct:1},
+{q:"What does 'WWW' stand for?", options:["World Wide Web","World Wide Wire","Web Wide World","World Web Wire"], correct:0},
+{q:"Which of these is an example of hardware?", options:["Operating System","Antivirus","Mouse","Browser"], correct:2},
+{q:"What is a group of 8 bits called?", options:["1 Byte","1 Bit","1 Pixel","1 Kilobyte"], correct:0},
+{q:"Which of these is used to connect to the internet?", options:["Modem","Printer","Speaker","Monitor"], correct:0}
+]
+},
+"8": {
+"math": [
+{q:"What is the square root of 144?", options:["11","12","13","14"], correct:1},
+{q:"Solve: 2x + 3 = 11. What is x?", options:["3","4","5","6"], correct:1},
+{q:"What is 5 squared (5²)?", options:["10","15","25","55"], correct:2},
+{q:"What is the formula for the area of a rectangle?", options:["length + breadth","length × breadth","2(length + breadth)","length ÷ breadth"], correct:1},
+{q:"What is (2)³ (2 cubed)?", options:["4","6","8","9"], correct:2}
+],
+"science": [
+{q:"What is the basic structural and functional unit of life called?", options:["Tissue","Organ","Cell","Molecule"], correct:2},
+{q:"Which force opposes the relative motion between two surfaces in contact?", options:["Gravity","Friction","Magnetism","Tension"], correct:1},
+{q:"Coal and petroleum are examples of which type of resource?", options:["Renewable resources","Fossil fuels","Biotic resources","Water resources"], correct:1},
+{q:"Which part of the plant mainly conducts photosynthesis?", options:["Roots","Stem","Leaves","Flowers"], correct:2},
+{q:"What causes an echo?", options:["Absorption of sound","Reflection of sound","Refraction of sound","Diffraction of sound"], correct:1}
+],
+"english": [
+{q:"Convert to passive voice: 'She writes a letter.'", options:["A letter is written by her.","A letter was written by her.","She is writing a letter.","A letter writes her."], correct:0},
+{q:"Choose the sentence written in passive voice.", options:["The cat chased the mouse.","The mouse was chased by the cat.","The cat is chasing the mouse.","The cat will chase the mouse."], correct:1},
+{q:"What is the correct plural of 'mouse' (the animal)?", options:["mouses","mice","mices","mouse's"], correct:1},
+{q:"Identify the adverb: 'He runs quickly.'", options:["He","runs","quickly","."], correct:2},
+{q:"Which of these is a compound word?", options:["Sunflower","Beautiful","Running","Happiness"], correct:0}
+],
+"history": [
+{q:"In which year did the Revolt of 1857 take place?", options:["1757","1857","1947","1900"], correct:1},
+{q:"Which company established British control over India through trade?", options:["The East India Company","The Dutch Company","The Portuguese Company","The French Company"], correct:0},
+{q:"Who is known as the 'Father of the Nation' in India?", options:["Jawaharlal Nehru","Sardar Patel","Mahatma Gandhi","Subhas Chandra Bose"], correct:2},
+{q:"In which year did India gain independence?", options:["1942","1945","1947","1950"], correct:2},
+{q:"The Battle of Plassey was fought in which year?", options:["1757","1857","1707","1900"], correct:0}
+],
+"geography": [
+{q:"What is the topmost layer of Earth's surface, made of fine particles, called?", options:["Rock","Soil","Sand","Clay"], correct:1},
+{q:"Which sector is agriculture classified under?", options:["Primary sector","Secondary sector","Tertiary sector","Quaternary sector"], correct:0},
+{q:"What is the term for natural resources that can be replenished, like sunlight and wind?", options:["Non-renewable resources","Renewable resources","Mineral resources","Fossil resources"], correct:1},
+{q:"Which of these is a rabi crop (grown in winter)?", options:["Rice","Wheat","Cotton","Sugarcane"], correct:1},
+{q:"What is the term for industries based on agricultural raw materials, like sugar or textiles?", options:["Mineral-based industries","Agro-based industries","Forest-based industries","Marine-based industries"], correct:1}
+],
+"computer": [
+{q:"What does 'URL' stand for?", options:["Uniform Resource Locator","Universal Resource Link","United Resource Locator","Uniform Reference Link"], correct:0},
+{q:"Which of these is an example of an operating system?", options:["MS Excel","Linux","Google Chrome","MS Paint"], correct:1},
+{q:"What is a computer virus?", options:["A helpful software update","A malicious program that can harm a computer","A type of hardware","An antivirus tool"], correct:1},
+{q:"Which symbol separates the username from the domain in an email address?", options:["#","@","&","%"], correct:1},
+{q:"What does 'HTTP' stand for?", options:["HyperText Transfer Protocol","High Transfer Text Protocol","HyperText Technical Protocol","Home Text Transfer Protocol"], correct:0}
+]
+}
+};
+
+function getBestKey(cls, subj){
+return 'lockerNotesBest_' + cls + '_' + subj;
+}
+function getBestScore(cls, subj){
+try{
+const v = localStorage.getItem(getBestKey(cls, subj));
+return v === null ? null : parseInt(v);
+}catch(e){ return null; }
+}
+function setBestScore(cls, subj, score){
+try{ localStorage.setItem(getBestKey(cls, subj), score); }catch(e){}
+}
+
+function updateMockProgress(total){
+const answered = new Set();
+document.querySelectorAll('#mockTestArea input[type=radio]:checked').forEach(input => {
+answered.add(input.name);
+});
+const fill = document.getElementById('mockProgressFill');
+if(fill){
+fill.style.width = (answered.size / total * 100) + '%';
+}
+}
+
+function animateScoreCount(el, finalScore, total, prefixText, suffixText){
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduceMotion || finalScore === 0){
+el.textContent = prefixText + finalScore + ' / ' + total + suffixText;
+return;
+}
+let current = 0;
+const stepTime = Math.max(40, 600 / finalScore);
+const interval = setInterval(() => {
+current++;
+el.textContent = prefixText + current + ' / ' + total;
+if(current >= finalScore){
+clearInterval(interval);
+el.textContent = prefixText + finalScore + ' / ' + total + suffixText;
+}
+}, stepTime);
+}
+
+function loadMockTest(){
+const cls = document.getElementById('mockClass').value;
+const subj = document.getElementById('mockSubject').value;
+const questions = mockTestData[cls][subj];
+const area = document.getElementById('mockTestArea');
+area.innerHTML = '';
+area.dataset.cls = cls;
+area.dataset.subj = subj;
+
+const resultBox = document.createElement('div');
+resultBox.id = 'mockResult';
+resultBox.className = 'mock-result';
+area.appendChild(resultBox);
+
+const bestScore = getBestScore(cls, subj);
+const bestInfo = document.createElement('p');
+bestInfo.className = 'mock-best-info';
+bestInfo.textContent = bestScore !== null
+? ('Your best on this test: ' + bestScore + ' / ' + questions.length)
+: "You haven't attempted this test yet.";
+area.appendChild(bestInfo);
+
+const progressTrack = document.createElement('div');
+progressTrack.className = 'mock-progress-track';
+const progressFill = document.createElement('div');
+progressFill.className = 'mock-progress-fill';
+progressFill.id = 'mockProgressFill';
+progressTrack.appendChild(progressFill);
+area.appendChild(progressTrack);
+
+questions.forEach((q, qi) => {
+const qDiv = document.createElement('div');
+qDiv.className = 'mock-question';
+qDiv.dataset.correct = q.correct;
+
+const qText = document.createElement('p');
+qText.className = 'mock-q-text';
+qText.textContent = (qi + 1) + '. ' + q.q;
+qDiv.appendChild(qText);
+
+q.options.forEach((opt, oi) => {
+const label = document.createElement('label');
+label.className = 'mock-option';
+const radio = document.createElement('input');
+radio.type = 'radio';
+radio.name = 'mockq' + qi;
+radio.value = oi;
+radio.addEventListener('change', () => updateMockProgress(questions.length));
+label.appendChild(radio);
+label.appendChild(document.createTextNode(opt));
+qDiv.appendChild(label);
+});
+
+area.appendChild(qDiv);
+});
+
+const submitBtn = document.createElement('button');
+submitBtn.className = 'btn btn-solid';
+submitBtn.textContent = 'Submit Test';
+submitBtn.onclick = submitMockTest;
+area.appendChild(submitBtn);
+
+area.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function submitMockTest(){
+const area = document.getElementById('mockTestArea');
+const cls = area.dataset.cls;
+const subj = area.dataset.subj;
+const questions = document.querySelectorAll('.mock-question');
+let score = 0;
+questions.forEach((qDiv, qi) => {
+const correct = parseInt(qDiv.dataset.correct);
+const selected = qDiv.querySelector('input[name="mockq' + qi + '"]:checked');
+const labels = qDiv.querySelectorAll('.mock-option');
+labels.forEach((label, oi) => {
+label.classList.remove('correct', 'incorrect');
+if(oi === correct){
+label.classList.add('correct');
+} else if(selected && parseInt(selected.value) === oi){
+label.classList.add('incorrect');
+}
+});
+if(selected && parseInt(selected.value) === correct){
+score++;
+}
+});
+
+const prevBest = getBestScore(cls, subj);
+const isNewBest = prevBest === null || score > prevBest;
+if(isNewBest){
+setBestScore(cls, subj, score);
+}
+
+const resultBox = document.getElementById('mockResult');
+const isPerfect = score === questions.length;
+resultBox.className = 'mock-result visible' + (isPerfect ? ' perfect' : '');
+
+let prefixText, suffixText;
+if(isPerfect){
+prefixText = '🎉 Perfect score! ';
+suffixText = '';
+celebrate();
+} else if(isNewBest){
+prefixText = 'You scored ';
+suffixText = ' — 🏆 New best!';
+} else {
+prefixText = 'You scored ';
+suffixText = '';
+}
+animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
+resultBox.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ---------- Quick Answers search ----------
+const qaData = [
+{tag:"math", q:"How do I add fractions?", a:"Find a common denominator, convert each fraction to it, then add the numerators and keep that denominator.", keywords:["fraction","fractions","denominator","add"]},
+{tag:"math", q:"What is the order of operations?", a:"PEMDAS: Parentheses, Exponents, Multiplication/Division (left to right), then Addition/Subtraction (left to right).", keywords:["pemdas","order of operations","bodmas"]},
+{tag:"math", q:"How do I solve for x in a simple equation?", a:"Do the same operation to both sides to isolate x — whatever you add, subtract, multiply, or divide on one side, do to the other too.", keywords:["solve for x","algebra","equation","isolate"]},
+{tag:"math", q:"What is a prime number?", a:"A number greater than 1 that's only divisible by 1 and itself — like 2, 3, 5, 7, 11.", keywords:["prime number","prime","factors"]},
+{tag:"sci", q:"What is photosynthesis?", a:"Plants use sunlight, water, and carbon dioxide to make their own food (glucose), releasing oxygen as a byproduct.", keywords:["photosynthesis","plants","chlorophyll"]},
+{tag:"sci", q:"What's the difference between speed and velocity?", a:"Speed is how fast something is moving. Velocity is speed plus direction.", keywords:["speed","velocity","physics"]},
+{tag:"sci", q:"What are the states of matter?", a:"Solid, liquid, and gas are the main three — particles are tightly packed in solids, loosely connected in liquids, and spread out in gases.", keywords:["states of matter","solid","liquid","gas"]},
+{tag:"sci", q:"What is Newton's third law?", a:"For every action, there's an equal and opposite reaction — when you push on something, it pushes back on you just as hard.", keywords:["newton","third law","physics"]},
+{tag:"eng", q:"How do I start an essay introduction?", a:"Hook the reader with a question, fact, or short story, then state your main idea in one clear sentence.", keywords:["essay","introduction","intro","thesis"]},
+{tag:"eng", q:"What's the difference between a metaphor and a simile?", a:"A simile compares using 'like' or 'as.' A metaphor says one thing IS another, without 'like' or 'as.'", keywords:["metaphor","simile","figurative language"]},
+{tag:"eng", q:"What's the difference between affect and effect?", a:"'Affect' is usually a verb (to influence something). 'Effect' is usually a noun (the result of something).", keywords:["affect","effect","grammar"]},
+{tag:"hist", q:"How do I remember historical dates?", a:"Link each date to a story or image, and place events on a timeline instead of memorizing them in isolation.", keywords:["dates","history","memorize","timeline"]},
+{tag:"hist", q:"What caused World War I?", a:"A mix of alliances, militarism, and nationalism — the immediate spark was the assassination of Archduke Franz Ferdinand in 1914.", keywords:["world war 1","ww1","causes"]},
+{tag:"life", q:"How do I deal with exam stress?", a:"Break your revision into small chunks, take real breaks, and remember that one test doesn't decide everything.", keywords:["stress","exam","anxious","nervous","test anxiety"]},
+{tag:"life", q:"How do I make new friends at school?", a:"Start small — ask someone about something they're into, join a club, and give it time. Most friendships build slowly.", keywords:["friends","lonely","shy","social"]},
+{tag:"life", q:"How do I manage my time better?", a:"Write down your 3 most important tasks each day before anything else, and tackle the hardest one first while your energy is highest.", keywords:["time management","procrastinate","organize"]},
+{tag:"life", q:"How do I stay motivated?", a:"Break big goals into small, specific tasks — motivation usually follows action, not the other way around.", keywords:["motivation","motivated","lazy"]},
+{tag:"life", q:"What do I do if I'm being bullied?", a:"Tell a trusted adult right away — a teacher, parent, or counselor. You don't have to handle it alone, and it's not your fault.", keywords:["bully","bullied","bullying"]},
+];
+
+const searchInput = document.getElementById('quickSearch');
+const qaResults = document.getElementById('qaResults');
+
+function renderQaResults(query){
+qaResults.innerHTML = '';
+if(!query.trim()){
+qaResults.innerHTML = '<p class="qa-empty">Start typing above, or <a href="#ask">ask us directly</a> for anything not listed here.</p>';
+return;
+}
+const q = query.toLowerCase();
+const matches = qaData.filter(item =>
+item.q.toLowerCase().includes(q) ||
+item.keywords.some(k => k.includes(q) || q.includes(k))
+).slice(0, 6);
+
+if(matches.length === 0){
+qaResults.innerHTML = '<p class="qa-empty">No quick match yet — <a href="#ask">ask us directly</a> and get an instant answer instead.</p>';
+return;
+}
+matches.forEach(item => {
+const div = document.createElement('div');
+div.className = 'qa-item';
+div.setAttribute('data-tag', item.tag);
+div.innerHTML = '<p class="q">' + item.q + '</p><p class="a">' + item.a + '</p>';
+qaResults.appendChild(div);
+});
+}
+
+searchInput.addEventListener('input', (e) => renderQaResults(e.target.value));
+renderQaResults('');
+
+// ---------- Ask Anything ----------
+const WORKER_URL = "https://locker-notes-ai.aditya012345gupta.workers.dev";
+
+function cleanAnswerText(text){
+return text
+.replace(/^#{1,6}\s*/gm, '')
+.replace(/\*\*(.*?)\*\*/g, '$1')
+.replace(/\*(.*?)\*/g, '$1')
+.replace(/^[-*]\s+/gm, '• ')
+.replace(/`([^`]*)`/g, '$1')
+.trim();
+}
+
+function parseAnswer(text){
+const stepsMatch = text.match(/STEPS:\s*([\s\S]+)$/i);
+let mainText = text;
+let steps = [];
+if(stepsMatch){
+mainText = text.slice(0, stepsMatch.index).trim();
+steps = stepsMatch[1].trim().split('||').map(s => s.trim()).filter(Boolean);
+}
+mainText = mainText.replace(/^ANSWER:\s*/i, '').trim();
+return { mainText, steps };
+}
+
+let loadingInterval;
+function startLoadingAnimation(el){
+const phrases = ['Thinking', 'Working on it', 'Almost there'];
+let phraseIndex = 0;
+let dotCount = 0;
+el.textContent = phrases[0];
+loadingInterval = setInterval(() => {
+dotCount = (dotCount + 1) % 4;
+if(dotCount === 0){
+phraseIndex = (phraseIndex + 1) % phrases.length;
+}
+el.textContent = phrases[phraseIndex] + '.'.repeat(dotCount);
+}, 500);
+}
+function stopLoadingAnimation(){
+if(loadingInterval) clearInterval(loadingInterval);
+}
+
+function renderAnswer(container, rawAnswer){
+const cleaned = cleanAnswerText(rawAnswer);
+const { mainText, steps } = parseAnswer(cleaned);
+container.innerHTML = '';
+
+const mainDiv = document.createElement('div');
+mainDiv.className = 'answer-main';
+mainDiv.textContent = mainText;
+container.appendChild(mainDiv);
+
+if(steps.length > 1){
+const flow = document.createElement('div');
+flow.className = 'flow-chart';
+steps.forEach((step, i) => {
+const box = document.createElement('div');
+box.className = 'flow-step';
+box.textContent = (i + 1) + '. ' + step;
+flow.appendChild(box);
+if(i < steps.length - 1){
+const arrow = document.createElement('div');
+arrow.className = 'flow-arrow';
+arrow.textContent = '↓';
+flow.appendChild(arrow);
+}
+});
+container.appendChild(flow);
+}
+}
+
+async function askQuestion(){
+const input = document.getElementById('questionInput');
+const answerBox = document.getElementById('answerBox');
+const askBtn = document.getElementById('askBtn');
+const question = input.value.trim();
+
+if(!question){
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = 'Type a question first!';
+return;
+}
+
+askBtn.disabled = true;
+answerBox.className = 'answer-box visible loading';
+startLoadingAnimation(answerBox);
+
+try{
+const res = await fetch(WORKER_URL, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ question })
+});
+const data = await res.json();
+stopLoadingAnimation();
+
+if(data.answer){
+answerBox.className = 'answer-box visible';
+renderAnswer(answerBox, data.answer);
+} else {
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = data.error || "Couldn't get an answer right now. Please try again.";
+}
+} catch(err){
+stopLoadingAnimation();
+answerBox.className = 'answer-box visible error';
+answerBox.textContent = 'Something went wrong. Check your connection and try again.';
+} finally {
+askBtn.disabled = false;
+stopLoadingAnimation();
+}
+}
+
+// ---------- Share ----------
+function copyLink(){
+const url = "https://adityashorag-crypto.github.io/Locker-Notes/";
+navigator.clipboard.writeText(url).then(() => {
+const fb = document.getElementById('copyFeedback');
+fb.textContent = 'Copied!';
+setTimeout(() => { fb.textContent = ''; }, 2000);
+});
+}
+</script>
+
+</body>
+</html>
