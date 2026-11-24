@@ -564,3 +564,6 @@ background:rgba(74,144,226,0.12); padding:3px 9px; border-radius:6px; margin-bot
 .plan-del{border:none;background:none;color:var(--ink);font-size:1.3rem;cursor:pointer;min-width:36px;min-height:36px}
 #textSizeBar{position:fixed;left:10px;bottom:10px;z-index:8000;display:flex;gap:6px}
 #textSizeBar button{min-width:44px;min-height:44px;border:none;border-radius:50%;background:#1C2B3A;color:#FFD23F;font-family:var(--mono);font-weight:700;cursor:pointer}
+.mock-explain{margin:8px 0 0}
+.mistake-group h4{margin:12px 0 4px}
+:focus-visible{outline:3px solid var(--purple);outline-offset:2px}

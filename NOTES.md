@@ -36,6 +36,10 @@ Load order on each page: `data.js` first, then `index.js` or `class.js`.
 - My Study Plan (today's goals, resets ticks each day), progress list and the home page's Continue studying button all use `localStorage` (keys `lockerPlan`, `lockerProgress`, `lockerRecent`).
 - A- / A+ text size buttons are added by `data.js` (key `lockerTextSize`).
 
+- Mock tests: Explain this answer (Worker `mode: "explain"`), and Mistakes to review (grouped by subject, key `lockerMistakes`).
+- Subject names are written in full (see `SUBJECT_LABELS` in `class.js`). Use full words and "and" instead of "&" in new content.
+- Cambridge content is generated at the end of `data.js` from the UK content plus Cambridge exam-skills tips and a Cambridge Exam Skills test (Years 10 to 13).
+
 ## How the AI Teacher works
 `class.js` sends JSON to `WORKER_URL` (near the top of the "Ask Anything" section).
 - Question: `{ question, context }` returns `{ answer: "ANSWER: ...\nSTEPS: step || step || step" }`

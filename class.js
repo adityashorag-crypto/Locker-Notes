@@ -138,6 +138,7 @@ score++;
 } else {
 missedIdx.push(qi);
 }
+addExplainButton(qDiv, (area._questions || [])[qi], selected ? parseInt(selected.value) : -1);
 });
 
 const prevBest = getBestScore(cls, subj);
@@ -165,6 +166,7 @@ suffixText = '';
 animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
 showRetryMissed(area, missedIdx);
 if(!isRetry) recordProgress(subj, score, questions.length);
+updateMistakes(subj, area, missedIdx);
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
@@ -542,6 +544,55 @@ ul.appendChild(li);
 });
 }
 
+// ---- Explain a mock test answer with the AI Teacher ----
+function addExplainButton(qDiv, q, chosen){
+if(!q || qDiv.querySelector('.mock-explain-btn')) return;
+const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn btn-ghost mock-explain-btn'; btn.textContent = 'Explain this answer';
+const out = document.createElement('p'); out.className = 'mock-explain tool-out';
+btn.onclick = async function(){
+btn.disabled = true; out.textContent = 'Working on it...';
+const L = ['A', 'B', 'C', 'D', 'E', 'F'];
+const text = 'Options:\n' + q.options.map(function(o, i){ return L[i] + ') ' + o; }).join('\n') + '\nCorrect answer: ' + L[q.correct] + ') ' + q.options[q.correct] + '\nStudent chose: ' + (chosen >= 0 ? L[chosen] + ') ' + q.options[chosen] : 'nothing');
+try{
+const result = await callTeacher({ mode: 'explain', topic: q.q, text: text, context: levelName(country, level, currentStream) });
+out.textContent = (result.data && result.data.answer) ? cleanAnswerText(result.data.answer) : teacherErrorMessage(result, 'The AI Teacher is taking a break right now. Please try again later.');
+}catch(err){ out.textContent = teacherCatchMessage(err); }
+btn.disabled = false;
+};
+qDiv.appendChild(btn); qDiv.appendChild(out);
+}
+
+// ---- Mistakes to review, grouped by subject (kept in this browser only) ----
+const MIST_KEY = 'lockerMistakes';
+function updateMistakes(subj, area, missedIdx){
+const shown = area._questions || [];
+let list = readJSON(MIST_KEY, []);
+shown.forEach(function(q, i){
+list = list.filter(function(m){ return m.q !== q.q; });
+if(missedIdx.indexOf(i) >= 0) list.unshift({ s: (SUBJECT_LABELS[subj] || subj), q: q.q, a: q.options[q.correct] });
+});
+writeJSON(MIST_KEY, list.slice(0, 40)); renderMistakes();
+}
+function renderMistakes(){
+const wrap = document.getElementById('mistakeList');
+if(!wrap) return;
+wrap.textContent = '';
+const list = readJSON(MIST_KEY, []);
+if(!list.length){ const p = document.createElement('p'); p.textContent = 'No mistakes saved. Questions you miss in mock tests show up here until you get them right.'; wrap.appendChild(p); return; }
+const groups = {};
+list.forEach(function(m){ (groups[m.s] = groups[m.s] || []).push(m); });
+Object.keys(groups).forEach(function(s){
+const g = document.createElement('div'); g.className = 'mistake-group';
+const h = document.createElement('h4'); h.textContent = s + ' (' + groups[s].length + ')'; g.appendChild(h);
+const ul = document.createElement('ul'); ul.className = 'plan-list';
+groups[s].forEach(function(m){ const li = document.createElement('li'); li.textContent = m.q + ' Answer: ' + m.a; ul.appendChild(li); });
+g.appendChild(ul); wrap.appendChild(g);
+});
+const clr = document.createElement('button'); clr.type = 'button'; clr.className = 'btn btn-ghost'; clr.textContent = 'Clear this list';
+clr.onclick = function(){ writeJSON(MIST_KEY, []); renderMistakes(); };
+wrap.appendChild(clr);
+}
+
 async function askQuestion(){
 const input = document.getElementById('questionInput');
 const answerBox = document.getElementById('answerBox');
@@ -759,6 +810,7 @@ div.appendChild(s); div.appendChild(p); board.appendChild(div);
 }
 
 const SUBJECT_LABELS = {math:'Math', science:'Science', english:'English', history:'History', geography:'Geography', computer:'Computer Basics', evs:'EVS', gk:'General Knowledge', sst:'Social Studies', socialstudies:'Social Studies', humanities:'Humanities', phy:'Physics', chem:'Chemistry', acc:'Accountancy', bst:'Business Studies', eco:'Economics', hist:'History', pol:'Political Science', geo:'Geography', eng:'English'};
+Object.assign(SUBJECT_LABELS, {math:'Mathematics', eng:'English', sci:'Science', comp:'Computer Science', ss:'Social Studies', hcg:'History, Civics and Geography', lang:'Language', lang_lit:'Language and Literature', pshe:'Personal and Social Education', individuals:'Individuals and Societies', inquiry:'Units of Inquiry', lang_acq:'Language Acquisition', sciences:'Sciences', arts:'Arts', evs:'Environmental Studies (EVS)', gk:'General Knowledge', sst:'Social Studies', examskills:'Cambridge Exam Skills'});
 let activeMockSet = null;
 
 function renderMockControls(){
@@ -862,3 +914,5 @@ renderSavedNotes();
 writeJSON(RECENT_KEY, { name: levelName(country, level, currentStream), href: 'class.html' + window.location.search });
 renderPlan(); renderProgress(); updateToolMode();
 (function(){ const pi = document.getElementById('planInput'); if(pi) pi.addEventListener('keydown', function(e){ if(e.key === 'Enter') addPlanItem(); }); })();
+renderMistakes();
+['answerBox','toolOut','coachOutput'].forEach(function(id){ const el = document.getElementById(id); if(el) el.setAttribute('aria-live', 'polite'); });
