@@ -10,3 +10,14 @@ CONTENT.cambridge = CONTENT.uk;  // replace with Cambridge-specific content
 MOCK.cambridge = MOCK.uk;        // replace with Cambridge-specific mock tests
 // Label for a class button/title. Uses custom names (like "IGCSE Year 10") when a curriculum has them.
 function levelText(meta, lv){ return (meta.levelNames && meta.levelNames[lv]) || (meta.levelLabel + ' ' + lv); }
+
+// Shows a small bar when the device is offline (used by both pages).
+(function(){
+function update(){
+let b = document.getElementById('offlineBar');
+if(!b){ b = document.createElement('div'); b.id = 'offlineBar'; b.setAttribute('role', 'status'); b.textContent = "You're offline. Pages you opened before still work, but the AI Teacher needs internet."; document.body.appendChild(b); }
+b.style.display = navigator.onLine ? 'none' : 'block';
+}
+window.addEventListener('online', update); window.addEventListener('offline', update);
+update();
+})();

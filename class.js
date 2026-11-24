@@ -118,6 +118,8 @@ const area = document.getElementById('mockTestArea');
 const cls = area.dataset.cls;
 const subj = area.dataset.subj;
 const questions = document.querySelectorAll('.mock-question');
+const isRetry = area.dataset.retry === '1';
+const missedIdx = [];
 let score = 0;
 questions.forEach((qDiv, qi) => {
 const correct = parseInt(qDiv.dataset.correct);
@@ -133,11 +135,13 @@ label.classList.add('incorrect');
 });
 if(selected && parseInt(selected.value) === correct){
 score++;
+} else {
+missedIdx.push(qi);
 }
 });
 
 const prevBest = getBestScore(cls, subj);
-const isNewBest = prevBest === null || score > prevBest;
+const isNewBest = !isRetry && (prevBest === null || score > prevBest);
 if(isNewBest){
 setBestScore(cls, subj, score);
 }
@@ -159,6 +163,7 @@ prefixText = 'You scored ';
 suffixText = '';
 }
 animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
+showRetryMissed(area, missedIdx);
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
@@ -321,6 +326,106 @@ if(err && err.name === 'AbortError') return 'That took too long. Please try agai
 return 'Something went wrong. Check your connection and try again.';
 }
 
+// Adds a "Try again" button under an error message so students can retry in one tap.
+function addRetryButton(box, retryFn){
+const btn = document.createElement('button');
+btn.type = 'button';
+btn.className = 'btn btn-ghost retry-btn';
+btn.textContent = 'Try again';
+btn.onclick = retryFn;
+box.appendChild(document.createElement('br'));
+box.appendChild(btn);
+}
+
+// Class + optional subject and topic, sent to the AI Teacher so answers fit better.
+function askContext(){
+const subj = document.getElementById('askSubject');
+const topic = document.getElementById('askTopic');
+let ctx = levelName(country, level, currentStream);
+if(subj && subj.value) ctx += ' | ' + subj.value;
+if(topic && topic.value.trim()) ctx += ' | ' + topic.value.trim().slice(0, 30);
+return ctx;
+}
+
+// ---- Saved answers (kept in this browser only, no account) ----
+const NOTES_KEY = 'lockerNotesSaved';
+function readSavedNotes(){
+try{ const v = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); return Array.isArray(v) ? v : []; }catch(e){ return []; }
+}
+function writeSavedNotes(list){
+try{ localStorage.setItem(NOTES_KEY, JSON.stringify(list.slice(0, 30))); }catch(e){}
+}
+function addSaveButton(box, question, answer){
+const btn = document.createElement('button');
+btn.type = 'button'; btn.className = 'btn btn-ghost retry-btn'; btn.textContent = 'Save this answer';
+btn.onclick = function(){
+const list = readSavedNotes();
+list.unshift({ q: question.slice(0, 200), a: cleanAnswerText(answer).slice(0, 1500) });
+writeSavedNotes(list); renderSavedNotes();
+btn.textContent = 'Saved'; btn.disabled = true;
+};
+box.appendChild(btn);
+}
+function renderSavedNotes(){
+const wrap = document.getElementById('savedNotes');
+if(!wrap) return;
+const list = readSavedNotes();
+wrap.textContent = '';
+if(!list.length) return;
+const h = document.createElement('h3'); h.textContent = 'My saved answers (kept on this device only)'; wrap.appendChild(h);
+list.forEach(function(n, idx){
+const item = document.createElement('details'); item.className = 'saved-note';
+const s = document.createElement('summary'); s.textContent = n.q;
+const p = document.createElement('p'); p.textContent = n.a;
+const del = document.createElement('button'); del.type = 'button'; del.className = 'btn btn-ghost'; del.textContent = 'Delete';
+del.onclick = function(){ const l = readSavedNotes(); l.splice(idx, 1); writeSavedNotes(l); renderSavedNotes(); };
+item.appendChild(s); item.appendChild(p); item.appendChild(del); wrap.appendChild(item);
+});
+}
+
+// ---- Mock tests: retry only the missed questions ----
+function showRetryMissed(area, missedIdx){
+const old = document.getElementById('mockRetryRow'); if(old) old.remove();
+if(!missedIdx.length) return;
+const shown = area._questions || [];
+const subset = missedIdx.map(function(i){ return shown[i]; }).filter(Boolean);
+if(!subset.length) return;
+const row = document.createElement('div'); row.id = 'mockRetryRow'; row.className = 'mock-retry-row';
+const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn btn-ghost';
+btn.textContent = 'Retry the ' + subset.length + ' I missed';
+btn.onclick = function(){ loadMockTest(subset); };
+row.appendChild(btn); area.appendChild(row);
+}
+
+// ---- Flashcards, made from the mock test questions (question on the front, answer on the back) ----
+function openFlashcards(){
+const sel = document.getElementById('mockSubject');
+const area = document.getElementById('mockTestArea');
+if(!sel || !area || !activeMockSet) return;
+const cards = (activeMockSet[sel.value] || []).map(function(q){ return { front: q.q, back: q.options[q.correct] }; });
+if(!cards.length) return;
+let i = 0, showBack = false;
+area.innerHTML = ''; area.dataset.retry = '';
+const box = document.createElement('div'); box.tabIndex = 0; box.setAttribute('role', 'button');
+const count = document.createElement('p'); count.className = 'mock-note';
+const row = document.createElement('div'); row.className = 'mock-retry-row';
+function draw(){
+box.textContent = showBack ? 'Answer: ' + cards[i].back : cards[i].front;
+box.className = 'flashcard' + (showBack ? ' back' : '');
+count.textContent = 'Card ' + (i + 1) + ' of ' + cards.length + '. Tap the card to flip it.';
+}
+function flip(){ showBack = !showBack; draw(); }
+function go(step){ i = (i + step + cards.length) % cards.length; showBack = false; draw(); }
+box.onclick = flip;
+box.onkeydown = function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); } };
+[['Previous', function(){ go(-1); }], ['Next', function(){ go(1); }], ['Shuffle', function(){ cards.sort(function(){ return Math.random() - 0.5; }); i = 0; showBack = false; draw(); }]].forEach(function(b){
+const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn btn-ghost'; btn.textContent = b[0]; btn.onclick = b[1]; row.appendChild(btn);
+});
+area.appendChild(box); area.appendChild(count); area.appendChild(row);
+draw();
+area.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
 async function askQuestion(){
 const input = document.getElementById('questionInput');
 const answerBox = document.getElementById('answerBox');
@@ -338,20 +443,23 @@ answerBox.className = 'answer-box visible loading';
 startLoadingAnimation(answerBox);
 
 try{
-const result = await callTeacher({ question: question, context: levelName(country, level, currentStream) });
+const result = await callTeacher({ question: question, context: askContext() });
 stopLoadingAnimation();
 
 if(result.data && result.data.answer){
 answerBox.className = 'answer-box visible';
 renderAnswer(answerBox, result.data.answer);
+addSaveButton(answerBox, question, result.data.answer);
 } else {
 answerBox.className = 'answer-box visible error';
 answerBox.textContent = teacherErrorMessage(result, 'The AI Teacher is taking a break right now. Please try again in a little while.');
+addRetryButton(answerBox, askQuestion);
 }
 } catch(err){
 stopLoadingAnimation();
 answerBox.className = 'answer-box visible error';
 answerBox.textContent = teacherCatchMessage(err);
+addRetryButton(answerBox, askQuestion);
 } finally {
 askBtn.disabled = false;
 stopLoadingAnimation();
@@ -420,10 +528,12 @@ draftBox.textContent = cleanAnswerText(data.answer);
 setCoachNotes(notesBox, '');
 } else {
 draftBox.textContent = teacherErrorMessage(result, "Couldn't generate a draft right now. Please try again in a little while.");
+addRetryButton(draftBox, generateDraft);
 setCoachNotes(notesBox, '');
 }
 } catch(err){
 draftBox.textContent = teacherCatchMessage(err);
+addRetryButton(draftBox, generateDraft);
 setCoachNotes(notesBox, '');
 } finally {
 coachBtn.disabled = false;
@@ -571,13 +681,16 @@ note.textContent = '5 quick questions for ' + levelName(country, level, currentS
 area.appendChild(note);
 }
 
-function loadMockTest(){
+function loadMockTest(subset){
 const subj = document.getElementById('mockSubject').value;
-const questions = activeMockSet[subj];
+const isRetry = Array.isArray(subset);
+const questions = isRetry ? subset : activeMockSet[subj];
 const area = document.getElementById('mockTestArea');
 area.innerHTML = '';
 area.dataset.cls = country + '_' + level;
 area.dataset.subj = subj;
+area.dataset.retry = isRetry ? '1' : '';
+area._questions = questions;
 
 const resultBox = document.createElement('div');
 resultBox.id = 'mockResult'; resultBox.className = 'mock-result';
@@ -585,7 +698,7 @@ area.appendChild(resultBox);
 
 const best = getBestScore(area.dataset.cls, subj);
 const bestInfo = document.createElement('p'); bestInfo.className = 'mock-best-info';
-bestInfo.textContent = best !== null
+bestInfo.textContent = isRetry ? 'Practice round: only the questions you missed. This will not change your best score.' : best !== null
 ? ('Your best on this test: ' + best + ' / ' + questions.length)
 : 'You have not attempted this test yet.';
 area.appendChild(bestInfo);
@@ -628,3 +741,5 @@ renderStreamPicker();
 renderHomework();
 renderAdvice();
 renderMockControls();
+
+renderSavedNotes();

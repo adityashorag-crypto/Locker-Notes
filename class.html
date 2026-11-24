@@ -52,6 +52,17 @@
 </div>
 </section>
 
+<section id="howto">
+<details class="howto"><summary>How to use this page</summary>
+<ol>
+<li><strong>Quick answers:</strong> search for a common question first.</li>
+<li><strong>AI Teacher:</strong> pick a subject and topic, then ask. Press Try again if it is busy.</li>
+<li><strong>Mock tests:</strong> pick a subject, take the test, then retry the ones you missed. Flashcards use the same questions.</li>
+<li><strong>Saved answers:</strong> press Save this answer to keep it on this device. Nothing needs an account.</li>
+</ol>
+</details>
+</section>
+
 <section id="quick">
 <div class="section-head">
 <h2>&#128269; Quick Answers</h2>
@@ -81,6 +92,8 @@
 </div>
 <div class="mock-wrap reveal">
 <div id="mockControlsArea"></div>
+<div class="mock-retry-row"><button class="btn btn-ghost" type="button" onclick="openFlashcards()">Study as flashcards</button></div>
+<p class="mock-note">These are practice questions made for studying. They are not an official exam.</p>
 <div id="mockTestArea"></div>
 </div>
 </section>
@@ -97,10 +110,15 @@
 <div class="panel-wrap reveal">
 <div class="panel active" id="teacherPanelAsk">
 <div class="ask-wrap" style="box-shadow:none; padding:0; border-top:none;">
+<div class="ask-context-row">
+<select id="askSubject" class="coach-select" aria-label="Subject"><option value="">Any subject</option><option>Mathematics</option><option>Science</option><option>English</option><option>History</option><option>Geography</option><option>Computer Science</option><option>Other</option></select>
+<input id="askTopic" class="coach-input" maxlength="40" placeholder="Topic (optional), e.g. fractions" aria-label="Topic">
+</div>
 <textarea id="questionInput" rows="4" placeholder="What's your question?"></textarea>
 <button class="btn btn-solid" id="askBtn" onclick="askQuestion()">Get an answer</button>
-<p class="ask-note">Answers are generated instantly and might not always be perfect &mdash; always double check anything important.</p>
+<p class="ask-note">Answers are generated instantly and might not always be perfect &mdash; always double check anything important. The AI Teacher runs on a free plan, so if it is busy or taking a break, wait a little and press Try again.</p>
 <div class="answer-box" id="answerBox"></div>
+<div id="savedNotes" class="saved-notes"></div>
 </div>
 </div>
 <div class="panel" id="teacherPanelCoach">

@@ -26,6 +26,12 @@ Plain HTML, CSS and JavaScript. No framework, no build step. It can be installed
 
 Load order on each page: `data.js` first, then `index.js` or `class.js`.
 
+## Study tools (all in `class.js`, no account needed)
+- Ask Anything has subject and topic choices (sent to the AI as part of `context`) and a Save this answer button. Saved answers live in the browser (`localStorage`, key `lockerNotesSaved`) on that device only.
+- Mock tests: after submitting, Retry the ones I missed. A retry round never changes the best score.
+- Flashcards are built from the mock test questions (question on the front, correct answer on the back).
+- `data.js` also adds a small offline bar on both pages.
+
 ## How the AI Teacher works
 `class.js` sends JSON to `WORKER_URL` (near the top of the "Ask Anything" section).
 - Question: `{ question, context }` returns `{ answer: "ANSWER: ...\nSTEPS: step || step || step" }`
@@ -50,5 +56,4 @@ Load order on each page: `data.js` first, then `index.js` or `class.js`.
 ## Known to-dos
 - Cambridge currently reuses the UK Year 1-13 study tips, advice and mock tests (see the end of `data.js`). Write Cambridge-specific content when ready.
 - The cinematic intro (`#intro` in `index.html`, styles at the end of `style.css`) plays once per browser session and is skipped for people who prefer reduced motion.
-- The AI Teacher feature text says "No sign-up, no limits." Free AI plans do have daily limits, so change the wording if students hit them.
 - Check the six "Free College Courses" links now and then, because websites move.
