@@ -13,6 +13,7 @@ Plain HTML, CSS and JavaScript. No framework, no build step. It can be installed
 |---|---|
 | `index.html` | Home page: choose country, board, class. Features, free college courses, share. |
 | `class.html` | One page per class, e.g. `class.html?country=india&level=5`. AI Teacher, Essay & Email Coach, quick answers, homework help, advice, mock tests. |
+| `sitemap.xml` | List of pages for Google. Submit it in Google Search Console. |
 | `style.css` | All styles, shared by both pages. |
 | `data.js` | All the content: `COUNTRIES`, `CONTENT` (homework tips, advice) and `MOCK` (mock test questions). Shared by both pages. Edit content here, in one place. |
 | `index.js` | Logic for the home page. |
@@ -47,5 +48,7 @@ Load order on each page: `data.js` first, then `index.js` or `class.js`.
 4. Don't let two AIs edit the same file at the same time.
 
 ## Known to-dos
+- Cambridge currently reuses the UK Year 1-13 study tips, advice and mock tests (see the end of `data.js`). Write Cambridge-specific content when ready.
+- The cinematic intro (`#intro` in `index.html`, styles at the end of `style.css`) plays once per browser session and is skipped for people who prefer reduced motion.
 - The AI Teacher feature text says "No sign-up, no limits." Free AI plans do have daily limits, so change the wording if students hit them.
 - Check the six "Free College Courses" links now and then, because websites move.

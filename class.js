@@ -28,7 +28,7 @@ function getAdvice(country, level, stream){
 function levelName(country, level, stream){
   const meta = COUNTRIES[country];
   if(country === 'general') return 'General \u00b7 For everyone';
-  let t = meta.levelLabel + ' ' + level;
+  let t = levelText(meta, level);
   if(hasStreamsFor(country, level) && stream){
     const names = {science:'Science', commerce:'Commerce', arts:'Arts / Humanities'};
     t += ' \u00b7 ' + names[stream];

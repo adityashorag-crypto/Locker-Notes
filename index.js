@@ -28,7 +28,7 @@ function getAdvice(country, level, stream){
 function levelName(country, level, stream){
   const meta = COUNTRIES[country];
   if(country === 'general') return 'General \u00b7 For everyone';
-  let t = meta.levelLabel + ' ' + level;
+  let t = levelText(meta, level);
   if(hasStreamsFor(country, level) && stream){
     const names = {science:'Science', commerce:'Commerce', arts:'Arts / Humanities'};
     t += ' \u00b7 ' + names[stream];
@@ -63,7 +63,7 @@ let selectedBoard = null;
 function renderCountries(){
 const grid = document.getElementById('countryGrid');
 grid.innerHTML = '';
-['general','india','usa','uk','canada','ib'].forEach(function(key){
+['general','india','usa','uk','canada','ib','cambridge'].forEach(function(key){
 const meta = COUNTRIES[key];
 const card = document.createElement('button');
 card.className = 'country-card' + (key==='general' ? ' general-card' : '') + (selectedCountry===key ? ' active' : '');
@@ -142,7 +142,7 @@ grid.className = 'level-grid';
 meta.levels.forEach(function(lv){
 const a = document.createElement('a');
 a.className = 'level-btn';
-a.textContent = meta.levelLabel + ' ' + lv;
+a.textContent = levelText(meta, lv);
 a.href = 'class.html?country=' + dataKey + '&level=' + lv;
 grid.appendChild(a);
 });
