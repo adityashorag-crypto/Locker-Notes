@@ -63,6 +63,16 @@
 </details>
 </section>
 
+<section id="plan">
+<div class="section-head"><h2>&#128197; My Study Plan</h2><p>Set a small goal for today. Everything stays on this device.</p></div>
+<div class="plan-wrap">
+<div class="coach-row"><input type="text" class="coach-input" id="planInput" maxlength="80" placeholder="Today's goal, e.g. finish 10 fractions questions" aria-label="Today's goal"><button class="btn btn-solid" type="button" onclick="addPlanItem()">Add goal</button></div>
+<ul class="plan-list" id="planList"></ul>
+<h3>My progress</h3>
+<ul class="plan-list" id="progressList"></ul>
+</div>
+</section>
+
 <section id="quick">
 <div class="section-head">
 <h2>&#128269; Quick Answers</h2>
@@ -92,7 +102,7 @@
 </div>
 <div class="mock-wrap reveal">
 <div id="mockControlsArea"></div>
-<div class="mock-retry-row"><button class="btn btn-ghost" type="button" onclick="openFlashcards()">Study as flashcards</button></div>
+<div class="mock-retry-row" id="flashRow"><button class="btn btn-ghost" type="button" onclick="openFlashcards()">Study as flashcards</button></div>
 <p class="mock-note">These are practice questions made for studying. They are not an official exam.</p>
 <div id="mockTestArea"></div>
 </div>
@@ -106,6 +116,7 @@
 <div class="tabbar" role="tablist" id="teacherTabbar">
 <button class="tab-btn" aria-selected="true" onclick="switchTeacherTab('ask')">Ask Anything</button>
 <button class="tab-btn" aria-selected="false" onclick="switchTeacherTab('coach')">Essay &amp; Email Coach</button>
+<button class="tab-btn" aria-selected="false" onclick="switchTeacherTab('tools')">Study Tools</button>
 </div>
 <div class="panel-wrap reveal">
 <div class="panel active" id="teacherPanelAsk">
@@ -120,6 +131,24 @@
 <div class="answer-box" id="answerBox"></div>
 <div id="savedNotes" class="saved-notes"></div>
 </div>
+</div>
+<div class="panel" id="teacherPanelTools">
+<p class="sub">Study helpers. Please don't include names or school details in anything you paste.</p>
+<div class="coach-form">
+<div class="coach-row">
+<select class="coach-select" id="toolMode" aria-label="Tool" onchange="updateToolMode()">
+<option value="summary">Summarize a topic</option>
+<option value="practice">Practice question (hint first)</option>
+<option value="mistake">Explain my mistake</option>
+<option value="writing">Feedback on my writing</option>
+</select>
+<input type="text" class="coach-input" id="toolTopic" maxlength="200" placeholder="Topic, e.g. photosynthesis" aria-label="Topic">
+</div>
+<textarea id="toolText" rows="6" maxlength="3000" style="display:none" placeholder="Paste here" aria-label="Your work"></textarea>
+<button class="btn btn-solid" id="toolBtn" onclick="runTool()">Go</button>
+</div>
+<div class="answer-box tool-out" id="toolOut"></div>
+<p class="coach-disclaimer">AI can make mistakes. Check important facts in your textbook.</p>
 </div>
 <div class="panel" id="teacherPanelCoach">
 <p class="sub">Get a first draft to learn from and rewrite in your own words &mdash; not something to hand in as-is.</p>

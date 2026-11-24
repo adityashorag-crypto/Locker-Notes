@@ -164,6 +164,7 @@ suffixText = '';
 }
 animateScoreCount(resultBox, score, questions.length, prefixText, suffixText);
 showRetryMissed(area, missedIdx);
+if(!isRetry) recordProgress(subj, score, questions.length);
 resultBox.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
@@ -426,6 +427,121 @@ draw();
 area.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+// ---- Study Tools tab: summary, practice question, explain my mistake, writing feedback ----
+const TOOL_UI = {
+summary: { ph: 'Topic, e.g. photosynthesis', text: false },
+practice: { ph: 'Topic, e.g. fractions', text: false },
+mistake: { ph: 'Subject or question (optional)', text: true, tph: 'Paste your answer here' },
+writing: { ph: 'What is it? e.g. essay about pollution', text: true, tph: 'Paste your essay or email here' }
+};
+function updateToolMode(){
+const ui = TOOL_UI[document.getElementById('toolMode').value];
+document.getElementById('toolTopic').placeholder = ui.ph;
+const t = document.getElementById('toolText');
+t.style.display = ui.text ? 'block' : 'none';
+if(ui.tph) t.placeholder = ui.tph;
+}
+function renderPractice(box, p){
+box.textContent = '';
+const q = document.createElement('p'); q.textContent = p.question; box.appendChild(q);
+const hint = document.createElement('p'); hint.textContent = 'Hint: ' + p.hint; hint.style.display = 'none'; box.appendChild(hint);
+const ans = document.createElement('p'); ans.textContent = 'Answer: ' + p.answer + (p.explanation ? '\n' + p.explanation : ''); ans.style.display = 'none'; box.appendChild(ans);
+const row = document.createElement('div'); row.className = 'mock-retry-row';
+[['Show hint', function(){ hint.style.display = 'block'; }], ['Show answer', function(){ ans.style.display = 'block'; }], ['Another question', runTool]].forEach(function(b){
+const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn btn-ghost'; btn.textContent = b[0]; btn.onclick = b[1]; row.appendChild(btn);
+});
+box.appendChild(row);
+}
+async function runTool(){
+const mode = document.getElementById('toolMode').value;
+const topic = document.getElementById('toolTopic').value.trim();
+const text = document.getElementById('toolText').value.trim();
+const out = document.getElementById('toolOut');
+const btn = document.getElementById('toolBtn');
+if((TOOL_UI[mode].text && !text) || (!TOOL_UI[mode].text && !topic)){
+out.className = 'answer-box tool-out visible error';
+out.textContent = TOOL_UI[mode].text ? 'Paste your work first!' : 'Type a topic first!';
+return;
+}
+btn.disabled = true;
+out.className = 'answer-box tool-out visible';
+out.textContent = 'Working on it...';
+try{
+const result = await callTeacher({ mode: mode, topic: topic, text: text, context: levelName(country, level, currentStream) });
+const d = result.data;
+if(d && d.practice && d.practice.question){
+renderPractice(out, d.practice);
+} else if(d && d.answer){
+out.textContent = cleanAnswerText(d.answer);
+} else {
+out.className = 'answer-box tool-out visible error';
+out.textContent = teacherErrorMessage(result, 'The AI Teacher is taking a break right now. Please try again in a little while.');
+addRetryButton(out, runTool);
+}
+} catch(err){
+out.className = 'answer-box tool-out visible error';
+out.textContent = teacherCatchMessage(err);
+addRetryButton(out, runTool);
+} finally {
+btn.disabled = false;
+}
+}
+
+// ---- Study plan, progress and "continue studying" (kept in this browser only) ----
+const PLAN_KEY = 'lockerPlan', PROG_KEY = 'lockerProgress', RECENT_KEY = 'lockerRecent';
+function readJSON(k, f){ try{ const v = JSON.parse(localStorage.getItem(k) || 'null'); return v === null ? f : v; }catch(e){ return f; } }
+function writeJSON(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function todayStr(){ return new Date().toISOString().slice(0, 10); }
+function readPlan(){
+const p = readJSON(PLAN_KEY, null);
+const plan = (p && Array.isArray(p.items)) ? p : { day: todayStr(), items: [] };
+if(plan.day !== todayStr()){ plan.items.forEach(function(it){ it.done = false; }); plan.day = todayStr(); writeJSON(PLAN_KEY, plan); }
+return plan;
+}
+function addPlanItem(){
+const input = document.getElementById('planInput');
+const t = input.value.trim();
+if(!t) return;
+const plan = readPlan();
+if(plan.items.length >= 15) return;
+plan.items.push({ t: t.slice(0, 80), done: false });
+writeJSON(PLAN_KEY, plan); input.value = ''; renderPlan();
+}
+function renderPlan(){
+const ul = document.getElementById('planList');
+if(!ul) return;
+ul.textContent = '';
+const plan = readPlan();
+if(!plan.items.length){ const li = document.createElement('li'); li.textContent = 'No goals yet. Add a small one!'; ul.appendChild(li); return; }
+plan.items.forEach(function(it, i){
+const li = document.createElement('li');
+const label = document.createElement('label'); if(it.done) label.className = 'done';
+const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!it.done;
+cb.onchange = function(){ const p = readPlan(); if(p.items[i]){ p.items[i].done = cb.checked; writeJSON(PLAN_KEY, p); renderPlan(); } };
+label.appendChild(cb); label.appendChild(document.createTextNode(' ' + it.t));
+const del = document.createElement('button'); del.type = 'button'; del.className = 'plan-del'; del.textContent = '\u00d7'; del.setAttribute('aria-label', 'Remove goal');
+del.onclick = function(){ const p = readPlan(); p.items.splice(i, 1); writeJSON(PLAN_KEY, p); renderPlan(); };
+li.appendChild(label); li.appendChild(del); ul.appendChild(li);
+});
+}
+function recordProgress(subj, score, total){
+const list = readJSON(PROG_KEY, []);
+list.unshift({ s: (SUBJECT_LABELS[subj] || subj), c: levelName(country, level, currentStream), n: score, t: total, d: todayStr() });
+writeJSON(PROG_KEY, list.slice(0, 30)); renderProgress();
+}
+function renderProgress(){
+const ul = document.getElementById('progressList');
+if(!ul) return;
+ul.textContent = '';
+const list = readJSON(PROG_KEY, []);
+if(!list.length){ const li = document.createElement('li'); li.textContent = 'No mock tests finished yet.'; ul.appendChild(li); return; }
+list.slice(0, 8).forEach(function(it){
+const li = document.createElement('li');
+li.textContent = it.d + ': ' + it.c + ', ' + it.s + ' test, ' + it.n + ' / ' + it.t;
+ul.appendChild(li);
+});
+}
+
 async function askQuestion(){
 const input = document.getElementById('questionInput');
 const answerBox = document.getElementById('answerBox');
@@ -469,13 +585,12 @@ stopLoadingAnimation();
 // ---------- AI Teacher: tabs + Essay & Email Coach ----------
 function switchTeacherTab(which){
 const tabs = document.querySelectorAll('#teacherTabbar .tab-btn');
-const askPanel = document.getElementById('teacherPanelAsk');
-const coachPanel = document.getElementById('teacherPanelCoach');
-const showAsk = which === 'ask';
-tabs[0].setAttribute('aria-selected', showAsk ? 'true' : 'false');
-tabs[1].setAttribute('aria-selected', showAsk ? 'false' : 'true');
-askPanel.classList.toggle('active', showAsk);
-coachPanel.classList.toggle('active', !showAsk);
+const names = ['ask', 'coach', 'tools'];
+const ids = ['teacherPanelAsk', 'teacherPanelCoach', 'teacherPanelTools'];
+names.forEach(function(n, i){
+tabs[i].setAttribute('aria-selected', n === which ? 'true' : 'false');
+document.getElementById(ids[i]).classList.toggle('active', n === which);
+});
 }
 
 // Shows coaching notes as plain text (never as HTML), under a small heading.
@@ -651,6 +766,7 @@ const area = document.getElementById('mockControlsArea');
 const testArea = document.getElementById('mockTestArea');
 area.innerHTML = ''; testArea.innerHTML = '';
 activeMockSet = country === 'general' ? null : getMockSet(country, level, currentStream);
+const flashRow = document.getElementById('flashRow'); if(flashRow) flashRow.style.display = activeMockSet ? '' : 'none';
 
 if(!activeMockSet){
 const soon = document.createElement('div');
@@ -743,3 +859,6 @@ renderAdvice();
 renderMockControls();
 
 renderSavedNotes();
+writeJSON(RECENT_KEY, { name: levelName(country, level, currentStream), href: 'class.html' + window.location.search });
+renderPlan(); renderProgress(); updateToolMode();
+(function(){ const pi = document.getElementById('planInput'); if(pi) pi.addEventListener('keydown', function(e){ if(e.key === 'Enter') addPlanItem(); }); })();

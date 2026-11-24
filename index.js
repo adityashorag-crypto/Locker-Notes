@@ -164,3 +164,15 @@ fb.textContent='Copied!'; setTimeout(function(){fb.textContent='';},2000);
 }
 
 renderCountries();
+
+// "Continue studying": a button back to the last class page opened on this device.
+(function(){
+try{
+const r = JSON.parse(localStorage.getItem('lockerRecent') || 'null');
+const grid = document.getElementById('countryGrid');
+if(!r || !grid || typeof r.href !== 'string' || !/^class\.html\?/.test(r.href)) return;
+const box = document.createElement('p');
+const a = document.createElement('a'); a.className = 'btn btn-solid'; a.href = r.href; a.textContent = 'Continue studying: ' + String(r.name).slice(0, 60);
+box.appendChild(a); grid.parentNode.insertBefore(box, grid);
+}catch(e){}
+})();

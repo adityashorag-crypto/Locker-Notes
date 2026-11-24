@@ -555,3 +555,12 @@ background:rgba(74,144,226,0.12); padding:3px 9px; border-radius:6px; margin-bot
 .howto summary{cursor:pointer;font-weight:700}
 #offlineBar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:9000;padding:10px 16px;text-align:center;background:#1C2B3A;color:#FFD23F;font-family:var(--mono);font-size:.85rem}
 @media (prefers-reduced-motion:reduce){.flashcard{transition:none}}
+/* ---------- Study tools, plan, text size ---------- */
+.tool-out{white-space:pre-wrap}
+.plan-wrap{max-width:900px;margin:0 auto}
+.plan-list{list-style:none;padding:0;margin:12px 0}
+.plan-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;margin:6px 0;border-radius:10px;border:2px solid var(--paper-line);background:var(--paper)}
+.plan-list label.done{text-decoration:line-through;opacity:.6}
+.plan-del{border:none;background:none;color:var(--ink);font-size:1.3rem;cursor:pointer;min-width:36px;min-height:36px}
+#textSizeBar{position:fixed;left:10px;bottom:10px;z-index:8000;display:flex;gap:6px}
+#textSizeBar button{min-width:44px;min-height:44px;border:none;border-radius:50%;background:#1C2B3A;color:#FFD23F;font-family:var(--mono);font-weight:700;cursor:pointer}

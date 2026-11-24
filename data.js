@@ -21,3 +21,18 @@ b.style.display = navigator.onLine ? 'none' : 'block';
 window.addEventListener('online', update); window.addEventListener('offline', update);
 update();
 })();
+
+// Text size buttons (A- / A+), remembered on this device. Used by both pages.
+(function(){
+const KEY = 'lockerTextSize', sizes = [90, 100, 115, 130];
+function get(){ try{ const v = parseInt(localStorage.getItem(KEY), 10); return sizes.indexOf(v) >= 0 ? v : 100; }catch(e){ return 100; } }
+function apply(v){ document.documentElement.style.fontSize = v + '%'; try{ localStorage.setItem(KEY, String(v)); }catch(e){} }
+apply(get());
+const wrap = document.createElement('div'); wrap.id = 'textSizeBar';
+[['A-', -1, 'Smaller text'], ['A+', 1, 'Larger text']].forEach(function(b){
+const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = b[0]; btn.setAttribute('aria-label', b[2]);
+btn.onclick = function(){ const i = sizes.indexOf(get()); apply(sizes[Math.min(sizes.length - 1, Math.max(0, i + b[1]))]); };
+wrap.appendChild(btn);
+});
+document.body.appendChild(wrap);
+})();

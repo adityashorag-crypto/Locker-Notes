@@ -32,6 +32,10 @@ Load order on each page: `data.js` first, then `index.js` or `class.js`.
 - Flashcards are built from the mock test questions (question on the front, correct answer on the back).
 - `data.js` also adds a small offline bar on both pages.
 
+- Study Tools tab (summary, practice question with hint first, Explain my mistake, writing feedback) calls the Worker with `mode` set to `summary`, `practice`, `mistake` or `writing`. Practice returns `{ practice: { question, hint, answer, explanation } }`; the others return `{ answer }`.
+- My Study Plan (today's goals, resets ticks each day), progress list and the home page's Continue studying button all use `localStorage` (keys `lockerPlan`, `lockerProgress`, `lockerRecent`).
+- A- / A+ text size buttons are added by `data.js` (key `lockerTextSize`).
+
 ## How the AI Teacher works
 `class.js` sends JSON to `WORKER_URL` (near the top of the "Ask Anything" section).
 - Question: `{ question, context }` returns `{ answer: "ANSWER: ...\nSTEPS: step || step || step" }`
